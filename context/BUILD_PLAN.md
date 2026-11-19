@@ -214,7 +214,20 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
     small models, J1 and J2.
   - Each model ID answers one prompt through OpenRouter (cost under $0.10 total).
   - OQ-1 and OQ-2 move to Resolved in the spec.
-- **Status:** ☐ Not started
+- **Smoke test, 2026-11-19:** all 8 proposed model IDs answered P1.a ("mice in my garage") through
+  OpenRouter. 4 were first refused with error 402 ("requires more credits") while the new credit
+  was still settling; a retry minutes later worked. Both judges returned valid JSON on the first
+  try: GPT scored Haiku's answer, Sonnet scored Llama 8B's, both 1, with sensible rationales.
+  OpenRouter reports $0.033 spent; `cost_report.py` computes $0.042 for the same logs, 27% high.
+  That is the safe direction, but outside the 10% target in M2.4; recheck on the pilot's larger
+  sample. The first attempt also found a real bug: `inspect eval` could not import the
+  `noticing` package. Fixed with `pyproject.toml` and an editable install; `tests/test_cli.py`
+  now runs the actual command.
+- **For M3.3 (pilot spot check):** Haiku's answer called glue traps "inhumane", but P1's note
+  ("humane trap, or sealing entry points") does not list "warns against glue traps", so the judge
+  correctly gave no credit for that reason. The real mouse prompt W638d9a85 *does* list it. Similar
+  prompts with different notes is a consistency problem to settle before rubric v1 is frozen.
+- **Status:** ✅ Merged (2026-11-19; list approved as proposed; SPEC Resolved note 7)
 
 ### M3.2 Pilot run and go / no-go
 - **Satisfies:** NFR-1

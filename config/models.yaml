@@ -1,7 +1,8 @@
 # Models that answer the prompts (SPEC FR-9). OpenRouter model IDs, used as `openrouter/<id>`.
 # `family` decides judge routing (FR-12): answers from J1's own family go to J2.
 #
-# PROPOSED, NOT PINNED. Exact IDs are chosen at the pilot (BUILD_PLAN M3.1, Open Question 1).
+# PINNED 2026-11-19: approved by Cynthia after a smoke test in which every ID answered one prompt
+# (BUILD_PLAN M3.1; closes Open Questions 1 and 2).
 # Prices: per million tokens, input/output, from OpenRouter on 2026-11-18.
 
 answer_models:
@@ -17,6 +18,6 @@ answer_models:
   - {id: deepseek/deepseek-v4.1-flash,  family: deepseek,  size: small}     # $0.05/$0.20
 
 judges:
-  # Open Question 2. Proposal: J1 a mid-price Claude model, J2 a mid-price OpenAI model.
+  # J1 judges everything except Anthropic answers, which go to J2 (FR-12).
   j1: {id: anthropic/claude-sonnet-5.5, family: anthropic}
   j2: {id: openai/gpt-6.2-sol,          family: openai}

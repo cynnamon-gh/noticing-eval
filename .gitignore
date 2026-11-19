@@ -11,3 +11,6 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .DS_Store
+
+# Created by the editable install (pip install -e .)
+*.egg-info/

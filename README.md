@@ -15,6 +15,7 @@ Needs Python 3.11 or later. Tested on 3.14.
 ```bash
 uv venv --python 3.14 .venv
 uv pip install --python .venv/bin/python -r requirements.txt
+uv pip install --python .venv/bin/python -e .   # makes `noticing` importable by the inspect command
 cp .env.example .env
 ```
 
