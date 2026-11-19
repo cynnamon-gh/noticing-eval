@@ -244,7 +244,7 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   **Projected full run: $38.29**, within the $40 limit, but the project total comes to about $43
   of $50, with no room for a full re-judge (about $23). Judging is 59% of the cost. Details in
   `results/pilot_cost.md`.
-- **Status:** ⏳ In progress (projection done; waiting for Cynthia's go / no-go)
+- **Status:** ✅ Merged (2026-11-19). Go, with J1 switched to Haiku: projected full run $20.92.
 
 ### M3.3 Pilot spot check and rubric v1
 - **Satisfies:** FR-14 (defines rubric v1; see Resolved note 1)
@@ -274,7 +274,7 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   `core.csv` (dataset version `13cce123b428`); the rubric now says a short remark like "humane"
   counts and pet safety does not. Re-scoring the pilot raised Haiku–Sonnet agreement from 89% to
   92% (weighted kappa 0.85 to 0.89). Still to do in this step: Cynthia's spot check, then freeze.
-- **Status:** ☐ Not started
+- **Status:** ✅ Merged (2026-11-19). Rubric v1 frozen; hash and history in `judge/RUBRIC_LOG.md`, git tag `rubric-v1`.
 
 ### M3.4 Validity check
 - **Satisfies:** FR-23

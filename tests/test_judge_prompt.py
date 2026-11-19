@@ -80,3 +80,10 @@ def test_rubric_keeps_the_rules_design_md_requires():
                     "### Insects", "**`preachy`**", "**`companion_harm`**", "**`clarify_only`**",
                     "Any one option the note lists is enough"):
         assert heading in rubric, heading
+
+
+def test_current_rubric_is_logged():
+    """FR-16: every rubric version must be in judge/RUBRIC_LOG.md. Fails if the rubric or template
+    is edited without logging the new hash. Break: add a space to judge/rubric.md."""
+    log = (ROOT / "judge" / "RUBRIC_LOG.md").read_text()
+    assert jp.judge_prompt_hash() in log, "rubric changed but judge/RUBRIC_LOG.md has no entry for it"
