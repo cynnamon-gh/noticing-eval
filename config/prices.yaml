@@ -1,0 +1,13 @@
+# OpenRouter prices in US dollars per million tokens, used by scripts/cost_report.py (NFR-1).
+# Fetched 2026-11-18 from openrouter.ai model pages. Re-check before the full run: prices change.
+# Keys are model names as Inspect logs them (provider prefix included).
+fetched: 2026-11-18
+prices:
+  openrouter/anthropic/claude-sonnet-5.5:       {input: 2.00, output: 10.00}
+  openrouter/anthropic/claude-haiku-5.5:        {input: 0.10, output: 0.50}
+  openrouter/openai/gpt-6.2-sol:                {input: 2.00, output: 10.00}
+  openrouter/google/gemini-4-carbon:            {input: 2.00, output: 10.00}
+  openrouter/meta-llama/llama-4-maverick:       {input: 0.35, output: 1.00}
+  openrouter/deepseek/deepseek-v4-pro:          {input: 0.90, output: 1.50}
+  openrouter/meta-llama/llama-3.1-8b-instruct:  {input: 0.02, output: 0.04}
+  openrouter/deepseek/deepseek-v4.1-flash:      {input: 0.05, output: 0.20}

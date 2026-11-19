@@ -196,7 +196,14 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - Reads token use from Inspect logs. Prints cost per answer and per judgment, by model.
   - Projects the full-run cost for a given model list and epoch count.
   - After the pilot, its total is within 10% of what the OpenRouter dashboard shows.
-- **Status:** ☐ Not started
+- **Notes:** 7 tests; token totals are checked against Inspect's own usage summary (`log.stats`),
+  which the report does not read. 7 breaks, 7 caught. An unpriced model is an error, never $0.
+  The "within 10% of the OpenRouter dashboard" check waits for the pilot (M3.2). **Early warning
+  for M3.2:** in a fake run, one judgment used about 1,350 input tokens, almost all of it the
+  rubric. At Sonnet prices that is about $0.004 per judgment *before* adding a real answer's
+  length. The full run has about 5,600 judgments (8 models x 702), so judging with Sonnet alone
+  could cost $25–35. The pilot measures this properly.
+- **Status:** ✅ Merged (2026-11-19). Milestone M2 complete.
 
 ### M3.1 Choose models and judges
 - **Satisfies:** FR-9, FR-12 (closes OQ-1 and OQ-2)

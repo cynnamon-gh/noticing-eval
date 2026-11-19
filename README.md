@@ -43,6 +43,14 @@ Task options (`-T name=value`): `epochs` (default 3), `versions` (e.g. `a` for o
 `core_ids` (e.g. `P1,V20`), `welfare_system_prompt` (validity check only), `judge` (`false` to skip
 judging), `j1` / `j2` (judge models; default from `config/models.yaml`). Logs go to `logs/`.
 
+After a run, check what it cost and what the full run would cost:
+
+```bash
+.venv/bin/python scripts/cost_report.py logs/pilot --epochs 3
+```
+
+Prices are in `config/prices.yaml`; a model missing from it stops the report.
+
 Every answer is judged by J1, except answers from J1's own model family, which go to J2. A model
 missing from `config/models.yaml` stops the run, because its family is unknown.
 
