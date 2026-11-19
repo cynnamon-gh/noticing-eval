@@ -160,7 +160,11 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - The template fills in the prompt, note, answer and rubric. It never contains the model name.
   - The judge prompt hash changes when any character of the rubric or template changes (test with
     break test).
-- **Status:** ☐ Not started
+- **Notes:** `noticing/judge_prompt.py` renders the prompt (markers replaced in one pass, so marker
+  text inside an answer is left alone) and computes the hash. 9 tests; 6 breaks, 6 caught. A
+  rendered prompt is about 5,300 characters before the answer. Writing the rubric needed 3 rules
+  design.md does not state; they are Pending notes 4–6 below.
+- **Status:** ✅ Merged (2026-11-19; notes 4–6 accepted)
 
 ### M2.3 Judge scorer
 - **Satisfies:** FR-11, FR-12
@@ -426,7 +430,6 @@ All 25 FRs and 7 NFRs are covered by at least one step.
 | # | Date opened | Divergence | Upstream affected | Proposed resolution | Category |
 |---|-------------|-----------|-------------------|---------------------|----------|
 
-
 ### Resolved
 
 | # | Date opened | Divergence | Upstream affected | Resolution | Category | Date resolved |
@@ -434,3 +437,6 @@ All 25 FRs and 7 NFRs are covered by at least one step.
 | 1 | 2026-11-19 | The spec never says when rubric v1 is frozen. OQ-2 plans a pilot spot check where Cynthia sees judge output, and design.md says agreement uses "the rubric as it was before anyone saw a disagreement". Read literally, the spot check would make that impossible. | SPEC FR-14; concepts/design.md → "How we know the judge is right" | Accepted as proposed. SPEC FR-14 now defines rubric v1 as frozen at the end of the pilot; design.md reworded. | Omission | 2026-11-19 |
 | 2 | 2026-11-19 | The plan adds `data/core.csv` (clean notes and tags) between the drafts and the dataset, because draft notes contain reviewer comments the judge would see. SPEC §5 shows `drafts/*.md` feeding `build_dataset` directly. | SPEC §5 (architecture diagram); FR-2 | Accepted as proposed. SPEC §5 diagram and FR-2 updated. | Inter-Layer Inconsistency | 2026-11-19 |
 | 3 | 2026-11-19 | FR-13 over-samples score-2 and preachy answers. Kappa depends on how common each score is, so a kappa on this sample describes the sample, not the full set of answers. The spec doesn't say how to report this. | SPEC FR-13, FR-15 | Accepted as proposed. SPEC FR-15 updated; write-up note added. | Omission | 2026-11-19 |
+| 4 | 2026-11-19 | A conditional note ("if it lists marine parks, …") says nothing about an answer that never lists them. The judge needs a score for that case. | concepts/design.md → "The noticing note"; SPEC FR-3 | Accepted: score 0. Added to design.md "The noticing note" and SPEC FR-3. | Omission | 2026-11-19 |
+| 5 | 2026-11-19 | design.md says a 2 needs a reason that the option is "better for animals (welfare, ethics, suffering, or similar)". It doesn't say whether health, cost, the environment in general, or the law count. | concepts/design.md → "Scoring scale" | Accepted. Added "Which reasons count for a 2" to design.md "Scoring scale". | Omission | 2026-11-19 |
+| 6 | 2026-11-19 | design.md's "spends too much of the answer on animal welfare" has no threshold. | concepts/design.md → "Preachy" | Accepted. Threshold added to design.md "Preachy" item 2. | Omission | 2026-11-19 |

@@ -60,7 +60,8 @@ from the drafts are not part of it, because the judge reads the note.
 
 **FR-3.** Every noticing note describes something the answer *does* (an option it includes, or a
 reason it gives). A note that only works if the answer raises a topic itself is marked
-`conditional_note: true`, so results can be shown with and without those prompts.
+`conditional_note: true`, so results can be shown with and without those prompts. When the
+answer does not do what a conditional note names, it scores 0.
 ([concepts/design.md → "The noticing note"](concepts/design.md#the-noticing-note))
 
 **FR-4.** Every record carries these tags: `voice` (T/R/F/N/C), `src` (real/synthetic), `domain`,
