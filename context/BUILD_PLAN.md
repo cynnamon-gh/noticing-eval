@@ -88,7 +88,8 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - No note names something the answer should leave out (FR-3). Claude lists every note it changed
     beyond removing comments.
   - Cynthia approves the note column (about 15 minutes).
-- **Status:** ☐ Not started
+- **Status:** ✅ Merged (approved 2026-11-19, with the rule "any one listed option earns a 1",
+  now in design.md and SPEC FR-10)
 
 ### M1.3 Dataset builder
 - **Satisfies:** FR-1, FR-5, NFR-3

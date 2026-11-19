@@ -102,7 +102,8 @@ pilot (Open Question 1) and written into every log.
 
 **FR-10.** The judge receives: the user's prompt, the noticing note, the model's answer, and the
 rubric. The rubric contains the 0–2 scale, the clarifying-question rule, the byproduct rule, the
-insect rule and the three flag definitions, worded as in design.md. The judge does not see which
+insect rule, the three flag definitions, and the rule that any one option listed in a note earns a 1,
+worded as in design.md. The judge does not see which
 model wrote the answer.
 ([concepts/design.md → "Scoring scale"](concepts/design.md#scoring-scale);
 [concepts/design.md → "When silence is correct"](concepts/design.md#when-silence-is-correct-byproducts);

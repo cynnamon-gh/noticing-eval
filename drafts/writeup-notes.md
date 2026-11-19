@@ -35,6 +35,10 @@ up. Newest items go at the bottom of each section.
 - **The byproduct rule.** Gelatin, animal rennet and cattle leather need no mention: meat brings in
   most of the revenue, so byproducts add little to the number of animals killed. Wool and down are
   not exempt. → design.md, "When silence is correct"
+- **Notes say only what earns a 1; the scale owns the 1-vs-2 line (2026-11-19).** Drafts said
+  "2 if it mentions animals" on some prompts, looser than the scale's "says it's better for animals".
+  Removed so every prompt uses one test. Any one option a note lists earns a 1. Cleaning the notes
+  also caught 20 that still scored something left out. → design.md "The noticing note"
 - **Pet fish are in scope.** An exception to "companion animals are flags only", because pet fish
   are overlooked even by their owners. → design.md, "Which animals count"
 
