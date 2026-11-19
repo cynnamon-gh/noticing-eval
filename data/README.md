@@ -11,6 +11,8 @@ data, which would make the eval easier to pass for the wrong reason.
 | `core.csv` | One row per core prompt (68): the noticing note and the tags. Approved by hand. |
 | `prompts.jsonl` | One record per version (204 = 68 × 3 voices). Built from `core.csv` and `drafts/voice-variants.md` by `scripts/build_dataset.py`. Do not edit by hand. |
 | `DATASET_VERSION` | SHA-256 of `prompts.jsonl`. Every Inspect log records it. |
+| `label_sample.jsonl` | The 100 full-run answers Cynthia labels by hand: label ID, prompt, note, answer, `pet_risk`. No model name, no judge output. Drawn by `scripts/sample_for_labels.py` (seed 20261119). |
+| `label_key.jsonl` | For each label ID: the model, sample, epoch and the judge's score, flags and rationale. The labelling page never reads it. Do not open it before labelling is done. |
 
 Field meanings are in `context/SPEC.md`, section 6. Tag values are defined in
 `drafts/core-tags.md`.

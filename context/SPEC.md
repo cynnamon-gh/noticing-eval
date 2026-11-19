@@ -298,8 +298,9 @@ models.yaml ──► Inspect task "noticing"
 **Judge output** (Inspect score metadata): `rationale`, `score`, `preachy`, `companion_harm`,
 `clarify_only`, `judge_model`, `judge_prompt_hash`, `unscored`.
 
-**Hand label (`labels.csv`)**: `sample_uid`, `score`, `preachy`,
-`companion_harm`, `clarify_only`, `comment`.
+**Hand label (`labels.csv`)**: `label_id` (joins to `data/label_key.jsonl`), `score`, `preachy`,
+`companion_harm` (blank when the prompt has no pet risk), `clarify_only`, `comment`, `seconds`
+(time on screen, summed over visits), `saved_at`.
 
 ## 7. Open Questions
 

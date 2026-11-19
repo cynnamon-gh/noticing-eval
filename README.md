@@ -55,6 +55,26 @@ Prices are in `config/prices.yaml`; a model missing from it stops the report.
 Every answer is judged by J1, except answers from J1's own model family, which go to J2. A model
 missing from `config/models.yaml` stops the run, because its family is unknown.
 
+## Hand labels
+
+Draw the 100 answers to label (fixed seed; writes `data/label_sample.jsonl` and
+`data/label_key.jsonl`):
+
+```bash
+.venv/bin/python scripts/sample_for_labels.py logs/full
+```
+
+Start the labelling page, then open http://127.0.0.1:8790:
+
+```bash
+.venv/bin/python scripts/label_server.py
+```
+
+The page shows one answer at a time with the prompt, noticing note and rubric, and never the model
+or the judge's score. Each label is written to `data/labels.csv` the moment it is saved, so you can
+stop at any time; the page reopens at the first unlabelled answer. Keys: `0` `1` `2` score, Enter
+save, arrows move. Port 8790 is used because 8765 is often taken; change it with `--port`.
+
 ## Git
 
 This is a personal project. The repo uses the personal git identity from `~/.gitconfig-personal`

@@ -313,7 +313,12 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - `label_sample.jsonl` holds only a random label ID, prompt, note and answer. Model and judge
     output are in `label_key.jsonl`, which the labelling page never reads.
   - Prints how many of each model and each judge score were drawn.
-- **Status:** ☐ Not started
+- **Status:** ✅ Done 2026-11-19. 100 of 3,264 answers: 12 or 13 per model; judge scores
+  33 / 35 / 32 (0 / 1 / 2) against 31% / 44% / 25% in the whole run; all 4 preachy answers; 58
+  distinct core prompts (at most 2 per prompt). `label_sample.jsonl` also carries `pet_risk`, which
+  M5.2 needs to show or hide the companion-harm question; it does not reveal the model. 8 sampler
+  tests, each watched failing. Only 6 answers in the sample have companion harm flagged, so its
+  kappa will have a wide interval. The run has 1 `clarify_only` answer, not drawn.
 
 ### M5.2 Labelling page
 - **Satisfies:** NFR-2, FR-13
@@ -326,14 +331,24 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
     continues where it stopped.
   - The companion-harm field is hidden for prompts without `pet_risk`.
   - The page records time spent per answer, so the real labelling time can be reported.
-- **Status:** ☐ Not started
+- **Status:** ✅ Done 2026-11-19. Python standard-library server on 127.0.0.1:8790 (8765 is used
+  by Cynthia's news tool). It never reads `label_key.jsonl`. Labels are validated with the judge's
+  rules (score 0–2, companion harm only on pet-risk prompts) and written through a temporary file.
+  Re-saving a label replaces its row and adds the time. 14 server tests, each watched failing.
+  In the browser pane Claude labelled 3 answers. Checked: saving without a score is refused with a
+  message; companion harm is hidden on a no-pet-risk prompt; reopening the page resumes at answer
+  4; going back shows the saved label; with the server stopped, the page shows "NOT SAVED" and
+  stays put. The test `labels.csv` was then deleted.
 
 ### M5.3 Cynthia labels 100 answers
 - **Satisfies:** FR-13, NFR-2
 - **Files:** `data/labels.csv`
 - **Test strategy:** n/a (human step).
 - **Acceptance:** 100 rows, about 2.5 hours, can be split over several sittings.
-- **Status:** ☐ Not started
+- **Status:** ✅ Done 2026-11-19. 100 labels, one per sample answer, all valid. 123 minutes on
+  screen (median 55 seconds per answer), in two sittings. Cynthia's scores: 36 / 34 / 30
+  (0 / 1 / 2); preachy 6; clarify only 0; companion harm 5. 39 labels have a comment; these are
+  read in M6.1. The labelling page never showed the model or the judge's output.
 
 ### M5.4 Both judges score the 100
 - **Satisfies:** FR-17 (own-family part)
@@ -341,7 +356,13 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
 - **Test strategy:** count check.
 - **Acceptance:** J1 and J2 each have a rubric v1 score for all 100 answers (re-score, no new model
   answers).
-- **Status:** ☐ Not started
+- **Status:** ✅ Done 2026-11-19. `noticing/crossjudge.py` replays the saved answers from the blind
+  sample file and runs the normal scorer with one judge. Haiku and GPT-6.2 each scored all 100:
+  0 errors, 0 unscored, $0.60 (OpenRouter charge matched). 3 tests, each watched failing.
+  First look (no intervals yet; M6.1 adds them): full-run judge vs Cynthia 75/100 same score,
+  linear weighted kappa 0.69 (matches scikit-learn). Haiku and GPT-6.2 agree with each other on
+  89/100. Haiku scored the 24 Anthropic answers 0.96 on average, GPT-6.2 1.00: no sign of
+  Haiku favouring its own family. Haiku gave the same score on re-judging 73 of 76 answers.
 
 ### M6.1 Agreement report
 - **Satisfies:** FR-14, FR-15, FR-16
@@ -352,7 +373,13 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - Weighted kappa (linear) on the score, kappa per flag, percent agreement, 3×3 confusion table,
     each with a bootstrap interval.
   - Every disagreement listed with the answer, both scores and the judge's rationale.
-- **Status:** ☐ Not started
+- **Status:** ✅ Done 2026-11-19. Same score 75/100 (95% interval 65–84%); linear weighted kappa
+  0.69 (0.56–0.81); within judge score 0 / 1 / 2: 85% / 66% / 75%. Preachy kappa 0.79
+  (0.34–1.00); companion harm 0.39 (−0.18 to 0.78, 21 answers); clarify only not defined (no yes
+  from either). Intervals: cluster bootstrap over the 58 core prompts in the sample, 10,000
+  resamples, in `noticing/bootstrap.py` (reused by M6.4). 16 tests; kappa checked against
+  scikit-learn; 9 breaks, each turned the suite red. The 25 disagreements and Cynthia's comments
+  on agreed answers are in `results/disagreements.md`.
 
 ### M6.2 Rubric fix (only if needed)
 - **Satisfies:** FR-14, FR-16
@@ -362,7 +389,12 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - Only if the disagreements show a real rubric bug. Each change logged with its cause.
   - All answers re-scored with the new rubric. The rubric v1 number stays the headline; the new
     number is labelled optimistic.
-- **Status:** ☐ Not started
+- **Status:** ✅ Done 2026-11-19. One rule changed (a kind step inside a harmful plan does not
+  count), after 6 disagreements Cynthia defended. First wording tested on the 100 and failed (2 of
+  6 targets moved); tightened wording moved the intended ones (`drafts/rubric-v2-proposal.md`).
+  Agreement on the 100 under v2: 81/100 with Cynthia's reviewed labels, the optimistic number.
+  All 3,264 answers re-scored into `logs/full_v2/`: 0 unscored, hash checked on every score,
+  $7.85 against $5.90 estimated. $0.53 left. Details: `results/full_run_v2.md`.
 
 ### M6.3 Judge bias checks
 - **Satisfies:** FR-17
