@@ -41,12 +41,12 @@ Key choices, and why:
 
 ## 2. Milestones
 
-- **M1. Dataset.** `data/prompts.jsonl` exists, 234 records, and passes the dataset check.
+- **M1. Dataset.** `data/prompts.jsonl` exists, 204 records (234 before the 2026-11-19 trim), and passes the dataset check.
 - **M2. Task and judge.** One command runs any model on any slice of the dataset, judges every
   answer, and reports cost. Tested on mockllm only, so it costs $0.
 - **M3. Pilot.** Models and judges chosen, real cost measured, rubric v1 frozen, validity check
   passed. Decides go / no-go for the full run.
-- **M4. Full run.** All models, all 234 prompts, judged with rubric v1.
+- **M4. Full run.** All models, all 204 prompts, judged with rubric v1.
 - **M5. Hand labels.** 100 blind labels from Cynthia, plus both judges' scores on the same 100.
 - **M6. Analysis.** Agreement, bias checks, metrics with confidence intervals, voice and model-size
   results, figures.
@@ -135,7 +135,7 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
 - **Files:** `noticing/task.py`, `config/models.yaml`
 - **Test strategy:** run on mockllm.
 - **Acceptance:**
-  - `inspect eval noticing/task.py --model mockllm/model` runs all 234 samples.
+  - `inspect eval noticing/task.py --model mockllm/model` runs all 204 samples (234 before the trim).
   - Each sample is one user message. No system prompt (checked in the log). Temperature not set.
   - `epochs` defaults to 3 and is a task parameter. Slice parameters: `core_ids`, `versions`
     (the pilot needs `.a` only).
@@ -201,8 +201,8 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   The "within 10% of the OpenRouter dashboard" check waits for the pilot (M3.2). **Early warning
   for M3.2:** in a fake run, one judgment used about 1,350 input tokens, almost all of it the
   rubric. At Sonnet prices that is about $0.004 per judgment *before* adding a real answer's
-  length. The full run has about 5,600 judgments (8 models x 702), so judging with Sonnet alone
-  could cost $25–35. The pilot measures this properly.
+  length. The full run had about 5,600 judgments (8 models x 702), so judging with Sonnet alone
+  could cost $25–35. (After the 2026-11-19 trim: about 3,300 judgments, 8 x 204 x 2.) The pilot measures this properly.
 - **Status:** ✅ Merged (2026-11-19). Milestone M2 complete.
 
 ### M3.1 Choose models and judges
@@ -242,7 +242,7 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
 - **Files:** `logs/validity/`, `results/validity.md`
 - **Test strategy:** compare noticing rate with and without the welfare system prompt.
 - **Acceptance:**
-  - 2 models (cheap ones) answer the 78 `.a` versions twice: no system prompt, and with the
+  - 2 models (cheap ones) answer the 68 `.a` versions twice: no system prompt, and with the
     welfare system prompt. 1 epoch each, judged with rubric v1.
   - Noticing rate is higher with the system prompt for both models. If not, stop and find out why
     before M4.
@@ -253,7 +253,7 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
 - **Files:** `logs/full/`
 - **Test strategy:** dataset and log checks.
 - **Acceptance:**
-  - Every model × 234 prompts × the epoch count chosen in M3.2, judged with rubric v1.
+  - Every model × 204 prompts × the epoch count (2 by default; M3.2 may cut to 1), judged with rubric v1.
   - The rubric hash in every log matches `rubric-v1`.
   - Failed samples are retried; the final count of answers per model is reported.
   - Spend so far is checked against the $50 total.
@@ -336,7 +336,7 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
 - **Test strategy:** unit tests on bootstrap; one end-to-end run on pilot logs.
 - **Acceptance:**
   - Every FR-18 metric per model, plus every FR-19 breakdown, one CSV each.
-  - Cluster bootstrap over the 78 core prompts, 10,000 resamples, seed fixed. Model differences
+  - Cluster bootstrap over the 68 core prompts, 10,000 resamples, seed fixed. Model differences
     computed inside each resample.
   - A test shows the cluster interval is wider than a naive one on data where versions of a core
     prompt agree. It fails if resampling is switched to single answers.

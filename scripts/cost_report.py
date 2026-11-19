@@ -6,10 +6,10 @@ Reads every .eval log in a folder. For each log it splits model calls into:
 and prices their tokens with config/prices.yaml.
 
 Then it projects the full run: for each answering model,
-  234 versions x epochs x (mean cost per answer + mean cost per judged answer)
+  204 versions x epochs x (mean cost per answer + mean cost per judged answer)
 plus the planned extras (validity check, cross-judging the 100 hand labels).
 
-Run:  .venv/bin/python scripts/cost_report.py logs/pilot [--epochs 3]
+Run:  .venv/bin/python scripts/cost_report.py logs/pilot [--epochs 2]
 
 Assumptions, stated in the report:
   - the pilot runs .a versions only; .b/.c answers are assumed to cost the same on average
@@ -31,10 +31,10 @@ from inspect_ai.log import list_eval_logs, read_eval_log
 ROOT = Path(__file__).resolve().parent.parent
 PRICES_YAML = ROOT / "config" / "prices.yaml"
 
-FULL_RUN_VERSIONS = 234
+FULL_RUN_VERSIONS = 204  # 68 core prompts x 3 voices
 BUDGET_FULL_RUN = 40.0  # NFR-1: full run goes ahead only if projected cost <= $40
 # Planned extras (BUILD_PLAN M3.4, M5.4), counted in calls.
-VALIDITY_ANSWERS_PER_MODEL = 78 * 2  # 78 .a versions, with and without the welfare system prompt
+VALIDITY_ANSWERS_PER_MODEL = 68 * 2  # 68 .a versions, with and without the welfare system prompt
 VALIDITY_MODELS = 2
 CROSSJUDGE_JUDGMENTS = 100 * 2       # both judges score the 100 hand-labelled answers
 
@@ -141,7 +141,7 @@ def report(log_dir: Path, epochs: int, prices: dict) -> tuple[str, float]:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("log_dir", type=Path)
-    ap.add_argument("--epochs", type=int, default=3)
+    ap.add_argument("--epochs", type=int, default=2)
     args = ap.parse_args(argv)
     try:
         text, _ = report(args.log_dir, args.epochs, load_prices())

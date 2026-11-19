@@ -33,7 +33,7 @@ def find(data, rid):
 def test_real_dataset_passes(real):
     """Fixture-adequacy check: the clean dataset must pass, or every test below proves nothing."""
     assert cd.check(real) == []
-    assert len(real) == 234
+    assert len(real) == 204
 
 
 def test_missing_version(data):

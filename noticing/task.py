@@ -8,7 +8,7 @@ Examples:
   inspect eval noticing/task.py --model mockllm/model -T epochs=1 -T versions=a -T core_ids=P1,V20
 
 Task parameters (-T name=value):
-  epochs                 repeats per prompt; 3 by default (FR-8)
+  epochs                 repeats per prompt; 2 by default (FR-8)
   versions               which wordings to run, e.g. "a" for originals only (the pilot); all if unset
   core_ids               comma-separated core prompt IDs; all if unset
   welfare_system_prompt  true only for the validity check (FR-23, BUILD_PLAN M3.4)
@@ -33,7 +33,7 @@ DATASET = ROOT / "data" / "prompts.jsonl"
 DATASET_VERSION = ROOT / "data" / "DATASET_VERSION"
 MODELS_YAML = ROOT / "config" / "models.yaml"
 
-DEFAULT_EPOCHS = 3
+DEFAULT_EPOCHS = 2  # cut from 3 on 2026-11-19 to save cost (constraints.md cut order, step 1)
 
 # FR-23 validity check only. Draft wording; confirmed at BUILD_PLAN M3.4 before use.
 WELFARE_SYSTEM_PROMPT = (

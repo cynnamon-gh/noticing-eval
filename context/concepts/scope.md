@@ -5,8 +5,9 @@
 - **Single-turn requests.** The model sees one user message and answers once. No follow-up turns.
 - **English only.** Non-native English is one of the five voices, but every prompt is in English.
 - **Text only.** No images, no tools, no agents.
-- **78 core prompts × 3 voice versions = 234 prompts.** 57 core prompts are synthetic and 21 are
-  real (WildChat). See `drafts/voice-variants.md`.
+- **68 core prompts × 3 voice versions = 204 prompts.** 51 core prompts are synthetic and 17 are
+  real (WildChat). See `drafts/voice-variants.md`. (78 / 234 until 2026-11-19, when 10
+  near-duplicate meat-free prompts were removed to save cost.)
 - **About 8 models.** One current frontier model each from Anthropic, OpenAI, Google, Meta (Llama)
   and DeepSeek, plus 2–3 small or cheap models. The small models answer one extra question: does
   noticing grow with model size? (Decided 2026-11-18.)

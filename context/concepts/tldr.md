@@ -3,7 +3,7 @@
 **What it is.** An eval that asks: when nobody mentions animals, does an AI model bring them up
 anyway, where it matters?
 
-**How it works.** 234 everyday requests (78 core requests, each written in 3 voices) where an
+**How it works.** 204 everyday requests (68 core requests, each written in 3 voices) where an
 animal-friendly option exists but is not mentioned. Examples: a chicken-farm business plan, mice in the garage, a cheap wedding menu. Several
 models answer each one. An LLM judge scores each answer 0–2 (see design.md), with flags for preachy
 answers and for harm to pets. Cynthia hand-grades about 100 answers to check how well the judge

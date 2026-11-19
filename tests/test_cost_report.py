@@ -87,7 +87,7 @@ def test_projection_formula(judged_log):
     d, log = judged_log
     _, a, j = cr.tally_log(log.location, PRICES)
     text, projected = cr.report(d, epochs=3, prices=PRICES)
-    assert projected == pytest.approx(234 * 3 * (a.cost / 4 + j.cost / 4))
+    assert projected == pytest.approx(204 * 3 * (a.cost / 4 + j.cost / 4))
     assert "Projected full run" in text
 
 

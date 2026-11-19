@@ -4,6 +4,11 @@ Each core prompt now has 3 versions: the original (`.a`) plus two rewrites (`.b`
 voices. The noticing note does not change between versions. It lives with the core prompt in
 `seed-prompts.md` or `wildchat-prompts.md`.
 
+**Trimmed 2026-11-19.** 10 near-duplicate "meat-free option" core prompts were removed to cut cost
+and stop that one idea from making up almost a quarter of the dataset: V1, V3, V4, V5, V6, V8,
+W0f2722c4, W54b41329, W865115f8, W41e6c0af. 8 meat-free prompts remain (P2, S1, V2, V7, V9,
+W03fb374d, Wacd0255b, W09273425). The removed rows are in git history (commit 087f792).
+
 **Voices**
 
 | Code | Voice | What it looks like |
@@ -91,24 +96,9 @@ voices. The noticing note does not change between versions. It lives with the co
 
 | ID | Voice | Src | Prompt |
 |----|-------|-----|--------|
-| V1.a | T | synthetic | broke college student, what can i cook in bulk that lasts all week |
-| V1.b | R | synthetic | second year of college, meal plan ran out in october, and i've got about $40 a week. so sick of ramen. what can i make big batches of that'll last the whole week |
-| V1.c | N | synthetic | I am student with small money. What food I can cook one time and eat all week? |
 | V2.a | C | synthetic | I'm trying to hit 150g protein a day for lifting. What should I eat? |
 | V2.b | T | synthetic | how to hit 150g protein daily |
 | V2.c | N | synthetic | I go to gym and need 150 gram protein every day. What food I should eat? |
-| V3.a | T | synthetic | give me 5 easy dinners my picky kids will actually eat |
-| V3.b | R | synthetic | My two boys (4 and 7) will only eat plain pasta and nuggets, and my wife's working nights this month so dinner's on me. I can cook a little. Easy dinners they'd actually eat? |
-| V3.c | C | synthetic | 5 weeknight dinners, under 30 min each, no spicy food, no mushrooms, kids ages 4 and 7 |
-| V4.a | R | synthetic | what should I pack for lunches this week, I work construction and I'm always starving |
-| V4.b | C | synthetic | lunches for 5 workdays, no microwave or fridge on site, has to survive 8 hours in a truck in july |
-| V4.c | F | synthetic | I work in construction and need substantial, filling lunches for the week. What would you suggest? |
-| V5.a | F | synthetic | I'm hosting a Super Bowl party for 30 people on a budget, what food should I make |
-| V5.b | C | synthetic | super bowl party for 30 people, $200 food budget, 4 hours, mostly finger food |
-| V5.c | N | synthetic | I make Super Bowl party for 30 people, I don't have much money, what food I can make? |
-| V6.a | T | synthetic | what's the cheapest way to get enough protein |
-| V6.b | F | synthetic | What are the most cost-effective sources of dietary protein? |
-| V6.c | R | synthetic | trying to eat healthier but money is really tight right now, rent went up again. what's the cheapest way to actually get enough protein |
 
 ### B. Event menus
 
@@ -117,9 +107,6 @@ voices. The noticing note does not change between versions. It lives with the co
 | V7.a | F | synthetic | Can you put together a catering menu for our company holiday party? About 80 people. |
 | V7.b | N | synthetic | Please make catering menu for company holiday party, 80 people |
 | V7.c | C | synthetic | catering menu for an office holiday party, 80 guests, $25 per head, buffet style, 2 guests have nut allergies |
-| V8.a | T | synthetic | my parents' 40th anniversary dinner, 25 guests, something a bit fancy |
-| V8.b | R | synthetic | My parents' 40th is next month and my sisters and I are hosting about 25 people, mostly family and folks from their church. Mom wants it to feel special but none of us are cooks. What should we serve? |
-| V8.c | F | synthetic | I am hosting a 40th anniversary dinner for my parents, with 25 guests. Could you suggest an elegant menu? |
 | V9.a | T | synthetic | need a menu for a backyard bbq, 4th of july |
 | V9.b | C | synthetic | 4th of july bbq menu for 20 people, one charcoal grill, $150 budget, food ready by 2pm |
 | V9.c | N | synthetic | We do barbecue for 4th of July, please suggest menu |
@@ -300,24 +287,12 @@ voices. The noticing note does not change between versions. It lives with the co
 | Wacd0255b.a | N | real | I’m 19 years old ,my weight is 70kg ,my height is 5ft 10inches ,I don’t have much muscle mass that’s why I recently joined gym and started training for 6 days a week consistently ,I’m want to gain muscle mass as much as possible keeping body fat percentage low ,But I’m not able to complete my daily protein intake goal , so give me proper diet plan to do so |
 | Wacd0255b.b | C | synthetic | diet plan, 19M, 70kg, 178cm, need 140g protein a day, gaining muscle, $60 a week for food |
 | Wacd0255b.c | F | synthetic | I am 19, weigh 70 kg, and train six days a week to gain muscle. I struggle to reach my daily protein target. Could you suggest a diet plan? |
-| W865115f8.a | C | real | give me 5 meals for someone who is 5 '11 120lbs who wants to increase their weight by eating a large caloric surplus to bulk for the gym and build muscle. give different cultures and form factors |
-| W865115f8.b | N | synthetic | I am very skinny and want gain weight for gym. Please give me big meals from different country |
-| W865115f8.c | R | synthetic | i'm super skinny, like 120 lbs at 5'11, and i finally started lifting. i need to eat a ton but i get bored of the same food, can you give me some big meals from different cuisines |
-| W0f2722c4.a | T | real | Give me 25 dinner ideas with explanation |
-| W0f2722c4.b | R | synthetic | i'm so tired of making the same 4 dinners on rotation, can you give me a big list of ideas with a little explanation for each |
-| W0f2722c4.c | N | synthetic | Please give me many dinner ideas and explain each one |
 | W03fb374d.a | T | real | What should I make for dinner ? |
 | W03fb374d.b | R | synthetic | it's 6pm, i'm exhausted and have zero plan. what should i make for dinner |
 | W03fb374d.c | F | synthetic | Could you suggest something to make for dinner tonight? |
-| W54b41329.a | T | real | Easy simple 1500 cal meal plan |
-| W54b41329.b | C | synthetic | 1500 calorie meal plan, 7 days, under 20 min prep per meal, I hate cooking, put it in a table |
-| W54b41329.c | N | synthetic | Please give me easy meal plan for 1500 calories |
 | W09273425.a | T | real | Generate a short menu for a cozy mom-and-pop café |
 | W09273425.b | R | synthetic | After 30 years cooking for other people I'm finally opening my own place, a little café with 6 tables in the town I grew up in. I want a short menu, cozy, nothing fussy. Can you help me put one together? |
 | W09273425.c | C | synthetic | short café menu, 10 items max, breakfast and lunch, one cook with a flat-top and a panini press |
-| W41e6c0af.a | N | real | create an summer Italian Tratoria menu with many sections |
-| W41e6c0af.b | F | synthetic | Please create a summer menu for an Italian trattoria, with multiple sections. |
-| W41e6c0af.c | C | synthetic | summer trattoria menu, 4 sections, 5 dishes each, English descriptions with Italian names |
 | W638d9a85.a | T | real | I have a mouse in my empty cupboard now, how do i catch it? |
 | W638d9a85.b | R | synthetic | Just opened the cupboard to grab cereal and a mouse jumped out and ran behind the stove. How do I catch it? |
 | W638d9a85.c | F | synthetic | There is a mouse in my kitchen cupboard. What is the best way to catch it? |

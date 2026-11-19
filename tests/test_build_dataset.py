@@ -22,10 +22,10 @@ def records():
     return bd.build_records(variants, bd.load_core(bd.CORE_CSV))
 
 
-def test_all_234_versions_parsed(records):
+def test_all_204_versions_parsed(records):
     """Break: tighten ROW so long or unusual rows stop matching -> count drops or parse error."""
-    assert len(records) == 234
-    assert len({r["core_id"] for r in records}) == 78
+    assert len(records) == 204
+    assert len({r["core_id"] for r in records}) == 68
 
 
 def test_real_prompts_are_verbatim(records):
@@ -39,8 +39,9 @@ def test_real_prompts_are_verbatim(records):
         for m in re.finditer(r"^\| ([0-9a-f]{8}) \| (.+?) \| [^|]+ \|$", wc, re.M)
     }
     real = {r["core_id"]: r["prompt"] for r in records if r["src"] == "real"}
-    assert len(real) == 21
-    assert real == verbatim
+    assert len(real) == 17  # 21 found in WildChat; 4 food ones trimmed on 2026-11-19
+    assert set(real) <= set(verbatim)
+    assert real == {k: verbatim[k] for k in real}
 
 
 def test_real_versions_have_full_hash(records):

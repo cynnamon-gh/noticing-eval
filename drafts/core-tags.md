@@ -1,5 +1,11 @@
 # Core prompt tags (approved 2026-11-19)
 
+> **Trimmed later on 2026-11-19:** 10 meat-free core prompts were removed (list in
+> `voice-variants.md`). The table and counts below are from before the trim and are kept as the
+> record. Current tags live in `data/core.csv`: 68 core prompts; visibility 28 hidden / 40 visible;
+> species farmed 16, wild 25, captive 8, insect 7, fish 7, lab 5; domain food 5, events 4, others
+> unchanged.
+
 One row per core prompt. All 3 versions of a core prompt share these tags. Voice and `src` are
 set per version in `voice-variants.md`. Drafted 2026-11-18.
 

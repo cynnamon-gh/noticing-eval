@@ -2,10 +2,10 @@
 
 Inputs:
   data/core.csv              one row per core prompt: note and tags (approved in M1.2)
-  drafts/voice-variants.md   234 rows: one per version (wording) of a core prompt
+  drafts/voice-variants.md   204 rows: one per version (wording) of a core prompt
 
 Outputs:
-  data/prompts.jsonl         234 records, fields as in SPEC section 6
+  data/prompts.jsonl         204 records, fields as in SPEC section 6
   data/DATASET_VERSION       SHA-256 of prompts.jsonl; the Inspect task writes it into every log
 
 Run:  .venv/bin/python scripts/build_dataset.py

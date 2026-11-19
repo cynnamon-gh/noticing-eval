@@ -5,12 +5,13 @@
 **Up to $50 in API costs for the whole project**: model answers, judge runs and reruns. (Decided
 2026-11-18.)
 
-This is tight for about 8 models × 234 prompts × several runs each, plus judging every answer. No
+This is tight for about 8 models × 204 prompts × several runs each, plus judging every answer. No
 price has been checked yet. So the first run is a small pilot that measures the real cost per
 answer and per judgment. The full run is sized from that measurement, not from a guess.
 
 If the pilot shows the full run would cost too much, cut in this order:
-1. fewer repeated runs per prompt (3 → 2)
+1. fewer repeated runs per prompt (3 → 2). **Applied 2026-11-19**, together with removing 10
+   near-duplicate meat-free prompts (78 → 68 core prompts), before the pilot.
 2. fewer small models
 3. a cheaper judge, but only if its agreement with Cynthia stays acceptable
 

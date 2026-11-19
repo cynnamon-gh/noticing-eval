@@ -25,7 +25,7 @@ def run(tmp_path, **task_args):
 def test_one_user_message_no_system_prompt_no_settings(tmp_path):
     """FR-7. Break: add system_message(...) or generate(temperature=0) to the default solver."""
     log = run(tmp_path, epochs=1)
-    assert len(log.samples) == 234
+    assert len(log.samples) == 204
     for s in log.samples:
         assert [m.role for m in s.messages] == ["user", "assistant"], s.id
         assert s.messages[0].text == s.metadata["prompt"]
@@ -38,17 +38,17 @@ def test_one_user_message_no_system_prompt_no_settings(tmp_path):
         assert {k: v for k, v in calls[0].config.model_dump().items() if v is not None} == {}, s.id
 
 
-def test_default_epochs_is_three(tmp_path):
+def test_default_epochs_is_two(tmp_path):
     """FR-8. Break: change DEFAULT_EPOCHS. Runs 2 core prompts only, to stay fast."""
     log = run(tmp_path, core_ids="P1,V20")
-    assert len(log.samples) == 2 * 3 * 3  # 2 core prompts x 3 versions x 3 epochs
-    assert log.eval.metadata["epochs"] == 3
+    assert len(log.samples) == 2 * 3 * 2  # 2 core prompts x 3 versions x 2 epochs
+    assert log.eval.metadata["epochs"] == 2
 
 
 def test_pilot_slice_originals_only():
     """The pilot runs .a versions only. Break: ignore `versions` in load_samples."""
     ds = load_samples(versions="a")
-    assert len(ds) == 78
+    assert len(ds) == 68
     assert {s.metadata["version"] for s in ds} == {"a"}
 
 

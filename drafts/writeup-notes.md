@@ -61,7 +61,7 @@ up. Newest items go at the bottom of each section.
 - **Weighted kappa** for the 0–2 score, because 0-vs-2 disagreement is worse than 0-vs-1. → FR-15
 - **Position bias does not apply**: each judgment sees one answer. Saying this shows it was
   considered. → FR-17
-- **Cluster bootstrap by core prompt.** The 3 versions × 3 epochs of one request are not
+- **Cluster bootstrap by core prompt.** The 3 versions × 2 epochs of one request are not
   independent; resampling single answers would give falsely narrow intervals. → FR-20
 - **Welfare-system-prompt check** (from TAC): if noticing doesn't rise when the system prompt names
   animal welfare, something in the pipeline is broken. → FR-23
@@ -98,6 +98,13 @@ up. Newest items go at the bottom of each section.
   only 3 of 78 prompts, so it became hidden (no animal mentioned, 38) vs visible (40). Domains with
   1–2 prompts were merged. Clothing still has only 1 core prompt, so it can't be reported alone. A
   breakdown by a category this small would be noise. → core-tags.md
+- **Trimmed before the pilot (2026-11-19): 78 → 68 core prompts, 3 → 2 repeats.** 18 of 78 core
+  prompts tested the same idea ("includes a meat-free option"); 10 were removed, keeping 8 varied
+  ones. Reasons: cost (about 58% of the previous number of answers), and balance, since one idea
+  would have made up almost a quarter of the headline rate, and many of its 1s are ordinary
+  budget advice. Side effect worth stating: all 10 were `hidden`, so hidden prompts fell from 38
+  to 28 (of 68). Repeats were cut rather than core prompts because the confidence intervals
+  depend mostly on the number of core prompts. → SPEC Resolved note 6
 - **Same request, two voices, already in the real data:** the two WildChat broiler-feed prompts
   (0b0cb1af short and casual, 793dfb28 long and technical) ask the same thing.
 

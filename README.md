@@ -28,7 +28,7 @@ the key is never committed.
 .venv/bin/python -m pytest -q
 ```
 
-The builder joins `data/core.csv` (one note and set of tags per core prompt) with the 234 wordings
+The builder joins `data/core.csv` (one note and set of tags per core prompt) with the 204 wordings
 in `drafts/voice-variants.md`, and writes `data/prompts.jsonl` plus `data/DATASET_VERSION` (its
 SHA-256). Edit those two inputs, never `prompts.jsonl` by hand.
 
@@ -39,14 +39,14 @@ SHA-256). Edit those two inputs, never `prompts.jsonl` by hand.
 .venv/bin/inspect eval noticing/task.py --model openrouter/<model id>      # real model, costs money
 ```
 
-Task options (`-T name=value`): `epochs` (default 3), `versions` (e.g. `a` for originals only),
+Task options (`-T name=value`): `epochs` (default 2), `versions` (e.g. `a` for originals only),
 `core_ids` (e.g. `P1,V20`), `welfare_system_prompt` (validity check only), `judge` (`false` to skip
 judging), `j1` / `j2` (judge models; default from `config/models.yaml`). Logs go to `logs/`.
 
 After a run, check what it cost and what the full run would cost:
 
 ```bash
-.venv/bin/python scripts/cost_report.py logs/pilot --epochs 3
+.venv/bin/python scripts/cost_report.py logs/pilot --epochs 2
 ```
 
 Prices are in `config/prices.yaml`; a model missing from it stops the report.
