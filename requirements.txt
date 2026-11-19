@@ -1,0 +1,9 @@
+# Pinned 2026-11-19. Python 3.11 or later (tested on 3.14).
+inspect-ai==0.3.291      # eval framework (runs prompts, epochs, logs)
+openai==3.55.1           # client Inspect uses for OpenRouter models
+python-dotenv==1.2.4     # loads OPENROUTER_API_KEY from .env
+pyyaml==6.0.3            # config/models.yaml
+pandas==3.1.1            # analysis tables
+matplotlib==3.11.2       # figures
+scikit-learn==1.9.1      # cross-check for Cohen's kappa in tests
+pytest==9.2.0            # tests
