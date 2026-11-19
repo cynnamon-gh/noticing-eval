@@ -21,6 +21,17 @@ cp .env.example .env
 Then open `.env` and paste your OpenRouter key after `OPENROUTER_API_KEY=`. Git ignores `.env`, so
 the key is never committed.
 
+## Build the dataset
+
+```bash
+.venv/bin/python scripts/build_dataset.py
+.venv/bin/python -m pytest -q
+```
+
+The builder joins `data/core.csv` (one note and set of tags per core prompt) with the 234 wordings
+in `drafts/voice-variants.md`, and writes `data/prompts.jsonl` plus `data/DATASET_VERSION` (its
+SHA-256). Edit those two inputs, never `prompts.jsonl` by hand.
+
 ## Git
 
 This is a personal project. The repo uses the personal git identity from `~/.gitconfig-personal`

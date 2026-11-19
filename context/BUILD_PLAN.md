@@ -102,7 +102,11 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - `wildchat_hash` is the **full** hash, from `drafts/wildchat-full-hashes.tsv`. (See Risk 1.)
   - Running the builder twice gives byte-identical output.
   - `DATASET_VERSION` holds the SHA-256 of `prompts.jsonl`; the task writes it into every log.
-- **Status:** ☐ Not started
+- **Notes:** `tests/test_build_dataset.py` has 8 tests, each break-tested (8 deliberate bugs, 8
+  failures). A one-time check against the WildChat extract: of 21 real prompts, 16 match exactly
+  and 5 match after collapsing whitespace (allowed by FR-5); none differ. Dataset version
+  `0d47fc814ba1`.
+- **Status:** ✅ Merged (2026-11-19)
 
 ### M1.4 Dataset check and data README
 - **Satisfies:** FR-6, NFR-5
