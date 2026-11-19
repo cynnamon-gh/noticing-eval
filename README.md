@@ -40,7 +40,11 @@ SHA-256). Edit those two inputs, never `prompts.jsonl` by hand.
 ```
 
 Task options (`-T name=value`): `epochs` (default 3), `versions` (e.g. `a` for originals only),
-`core_ids` (e.g. `P1,V20`), `welfare_system_prompt` (validity check only). Logs go to `logs/`.
+`core_ids` (e.g. `P1,V20`), `welfare_system_prompt` (validity check only), `judge` (`false` to skip
+judging), `j1` / `j2` (judge models; default from `config/models.yaml`). Logs go to `logs/`.
+
+Every answer is judged by J1, except answers from J1's own model family, which go to J2. A model
+missing from `config/models.yaml` stops the run, because its family is unknown.
 
 ## Git
 

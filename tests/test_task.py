@@ -16,7 +16,7 @@ from noticing.task import WELFARE_SYSTEM_PROMPT, load_samples, model_families, n
 
 
 def run(tmp_path, **task_args):
-    [log] = inspect_eval(noticing(**task_args), model="mockllm/model", log_dir=str(tmp_path),
+    [log] = inspect_eval(noticing(judge=False, **task_args), model="mockllm/model", log_dir=str(tmp_path),
                          display="none")
     assert log.status == "success"
     return log

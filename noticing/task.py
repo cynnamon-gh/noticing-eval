@@ -12,6 +12,8 @@ Task parameters (-T name=value):
   versions               which wordings to run, e.g. "a" for originals only (the pilot); all if unset
   core_ids               comma-separated core prompt IDs; all if unset
   welfare_system_prompt  true only for the validity check (FR-23, BUILD_PLAN M3.4)
+  judge                  false to skip judging (tests, or answering now and scoring later)
+  j1, j2                 judge models; default from config/models.yaml (FR-12)
 """
 
 from __future__ import annotations
@@ -22,6 +24,9 @@ import yaml
 from inspect_ai import Epochs, Task, task
 from inspect_ai.dataset import Sample, json_dataset
 from inspect_ai.solver import generate, system_message
+
+from noticing.judge_prompt import judge_prompt_hash
+from noticing.scorer import noticing_judge
 
 ROOT = Path(__file__).resolve().parent.parent
 DATASET = ROOT / "data" / "prompts.jsonl"
@@ -87,6 +92,9 @@ def noticing(
     core_ids: str | None = None,
     welfare_system_prompt: bool = False,
     seed: int = 20261119,
+    judge: bool = True,
+    j1: str | None = None,
+    j2: str | None = None,
 ) -> Task:
     dataset = load_samples(versions, core_ids)
     solver = [generate()]
@@ -95,6 +103,7 @@ def noticing(
     return Task(
         dataset=dataset,
         solver=solver,
+        scorer=noticing_judge(j1=j1, j2=j2) if judge else None,
         epochs=Epochs(int(epochs)),
         metadata={
             "dataset_version": DATASET_VERSION.read_text().strip(),
@@ -103,6 +112,6 @@ def noticing(
             "core_ids": _as_list(core_ids),
             "welfare_system_prompt": bool(welfare_system_prompt),
             "seed": seed,
-            # judge_prompt_hash is added by the judge scorer (M2.2, M2.3)
+            "judge_prompt_hash": judge_prompt_hash() if judge else None,
         },
     )

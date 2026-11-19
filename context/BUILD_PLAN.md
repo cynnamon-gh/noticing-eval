@@ -177,7 +177,15 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - Answers from J1's family go to J2. Stored metadata includes `judge_model`.
   - Score value, flags and rationale land in Inspect score metadata (SPEC §6).
   - Each rule above has a test that was watched failing.
-- **Status:** ☐ Not started
+- **Notes:** 19 tests in `tests/test_scorer.py`, with fake judges that return chosen replies; 11
+  breaks, 11 caught. Unscored answers get the value NaN (not a number), so averages skip them
+  rather than counting them as 0. An answer model with no family in `models.yaml` stops the run,
+  because sending it to J1 by default could let J1 judge its own family. The task now attaches the
+  scorer and records `judge_prompt_hash` (finishing M2.1's last item); `-T judge=false` skips
+  judging. **For M5 and M6:** Inspect stores long message text in logs as
+  `attachment://…` references. Code that reads judge inputs or answers from logs must call
+  `resolve_sample_attachments` first; a check that skipped this gave a false "all clear".
+- **Status:** ✅ Merged (2026-11-19)
 
 ### M2.4 Cost report
 - **Satisfies:** NFR-1

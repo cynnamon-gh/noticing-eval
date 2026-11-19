@@ -66,6 +66,12 @@ up. Newest items go at the bottom of each section.
 - **Welfare-system-prompt check** (from TAC): if noticing doesn't rise when the system prompt names
   animal welfare, something in the pipeline is broken. → FR-23
 
+- **Unscored answers are excluded, not counted as 0 (2026-11-19).** If the judge's reply can't be
+  read twice, the answer is marked unscored and reported as a count per model. Scoring it 0 would
+  lower that model's noticing rate for a reason unrelated to noticing. → SPEC FR-11
+- **Blindness has a known gap.** The judge and Cynthia never see which model answered, but an
+  answer can name itself ("As an AI made by…"). Worth counting how often this happens.
+
 ## Robustness
 
 - **Voice was a confound, found during drafting.** The first ~56 prompts used about two voices, and
