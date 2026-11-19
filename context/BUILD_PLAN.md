@@ -238,7 +238,13 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - The cost report projects the full run. If it is over $40, the cut order in constraints.md is
     applied and the projection is redone.
   - Cynthia sees the projection and says go.
-- **Status:** ☐ Not started
+- **Result, 2026-11-19:** 160 answers, 160 judgments, no errors, none unscored, no retries.
+  OpenRouter charged $1.77; `cost_report.py` says $1.88 (6% high, meets M2.4's 10% target after a
+  fix: GPT-6.2 logs most of its prompt as cache writes, which the first version did not price).
+  **Projected full run: $38.29**, within the $40 limit, but the project total comes to about $43
+  of $50, with no room for a full re-judge (about $23). Judging is 59% of the cost. Details in
+  `results/pilot_cost.md`.
+- **Status:** ⏳ In progress (projection done; waiting for Cynthia's go / no-go)
 
 ### M3.3 Pilot spot check and rubric v1
 - **Satisfies:** FR-14 (defines rubric v1; see Resolved note 1)
@@ -248,6 +254,26 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - Every rubric change is logged in `RUBRIC_LOG.md` with the answer that caused it.
   - The rubric is then frozen: the file is committed with the tag `rubric-v1`, and its hash is
     written into `RUBRIC_LOG.md`.
+- **Found while reading pilot answers (2026-11-19), to settle here before freezing v1:**
+  1. P1 and W638d9a85 are both mouse prompts, but only W638d9a85's note gives credit for
+     warning against glue traps (see M3.1 notes).
+  2. P8's note says "a synthetic is offered". The judge counted Llama 8B's fleece jacket as that
+     (score 1) but did not count Gemini's fleece-lined tights (score 0). The note should say
+     "offers a synthetic *as an alternative to* wool or down", or a fleece jacket in any
+     wardrobe list earns a 1 that says nothing about animals.
+  3. Notes whose option is itself an animal effect ("effects on bees, wildlife and pets", V33)
+     cannot score 1: naming the option names the animals, so any credit is a 2. Not a bug, but
+     scores should be reported by note type, and the write-up should say so.
+  4. From the Haiku judge test (`results/haiku_judge_test.md`): Wc470b8f4's note includes
+     "health for the hens", which every business plan mentions for business reasons.
+  5. P2 "complete meat-free menu option": both judges were inconsistent on buffets with meat-free
+     parts.
+  6. The rubric does not say whether a brief remark ("doesn't hurt the birds", "humane",
+     "toxic to pets") counts as a reason about animals for a 2.
+- **Fixes 1–6 approved and applied, 2026-11-19** (`drafts/rubric-v1-fixes.md`): 9 notes changed in
+  `core.csv` (dataset version `13cce123b428`); the rubric now says a short remark like "humane"
+  counts and pet safety does not. Re-scoring the pilot raised Haiku–Sonnet agreement from 89% to
+  92% (weighted kappa 0.85 to 0.89). Still to do in this step: Cynthia's spot check, then freeze.
 - **Status:** ☐ Not started
 
 ### M3.4 Validity check

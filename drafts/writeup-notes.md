@@ -47,7 +47,15 @@ up. Newest items go at the bottom of each section.
 - **Pet fish are in scope.** An exception to "companion animals are flags only", because pet fish
   are overlooked even by their owners. → design.md, "Which animals count"
 
-## Judge validation and statistics (from the spec, 2026-11-18)
+## Judge validation and statistics
+
+- **Six rule and note fixes before freezing rubric v1 (2026-11-19).** Found by reading pilot
+  answers and the 13 Haiku-vs-Sonnet disagreements. Pattern worth stating: most judge
+  disagreements came from notes an answer could meet by accident (a fleece jacket as "a
+  synthetic"; flock health in any business plan) or from an unstated rule (does "humane" count as
+  a reason?), not from a judge misreading. Also: some notes can only score 0 or 2, because the
+  option itself names an animal effect (V33); report 2s by note type. → drafts/rubric-v1-fixes.md
+ (from the spec, 2026-11-18)
 
 - **All 100 hand labels count, measured before any rubric fix.** A 60/40 dev/held-out split was
   considered and dropped as more than this project needs. Instead: headline agreement uses rubric
@@ -71,6 +79,13 @@ up. Newest items go at the bottom of each section.
   lower that model's noticing rate for a reason unrelated to noticing. → SPEC FR-11
 - **Blindness has a known gap.** The judge and Cynthia never see which model answered, but an
   answer can name itself ("As an AI made by…"). Worth counting how often this happens.
+
+- **Judge 1 is Haiku, chosen on cost after a judge-vs-judge check (2026-11-19).** On 120 pilot
+  answers Haiku matched Sonnet 89% (weighted kappa 0.85, never 0 vs 2) at 1/14 the cost. Be
+  clear in the write-up that this was agreement between two models, not with a human; the
+  human check is the 100 hand labels. Haiku was slightly more generous (higher 11 times, lower
+  2). Most disagreements came from unclear notes, which were then fixed.
+  → results/haiku_judge_test.md
 
 ## Robustness
 

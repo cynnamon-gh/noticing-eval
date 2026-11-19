@@ -103,3 +103,14 @@ def test_cli_fails_on_unpriced_log(judged_log, capsys):
     d, _ = judged_log
     assert cr.main([str(d)]) == 1
     assert "no price" in capsys.readouterr().err
+
+
+def test_cache_write_tokens_are_billed():
+    """Found in the pilot: GPT-6.2 logged 48 input tokens and 35,660 cache-write tokens.
+    Break: return usage.input_tokens only in billed_input_tokens."""
+    from inspect_ai.model import ModelUsage
+    u = ModelUsage(input_tokens=48, output_tokens=10, total_tokens=35_718,
+                   input_tokens_cache_write=35_660)
+    assert cr.billed_input_tokens(u) == 35_708
+    u2 = ModelUsage(input_tokens=100, output_tokens=10, total_tokens=160, input_tokens_cache_read=50)
+    assert cr.billed_input_tokens(u2) == 150

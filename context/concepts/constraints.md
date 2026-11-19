@@ -13,7 +13,9 @@ If the pilot shows the full run would cost too much, cut in this order:
 1. fewer repeated runs per prompt (3 → 2). **Applied 2026-11-19**, together with removing 10
    near-duplicate meat-free prompts (78 → 68 core prompts), before the pilot.
 2. fewer small models
-3. a cheaper judge, but only if its agreement with Cynthia stays acceptable
+3. a cheaper judge, but only if its agreement with Cynthia stays acceptable. **Applied 2026-11-19**:
+   judge 1 is Claude Haiku instead of Sonnet, after it matched Sonnet on 89% of pilot answers.
+   Its agreement with Cynthia is still measured on the 100 hand labels.
 
 ## Time
 

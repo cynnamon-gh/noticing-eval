@@ -19,5 +19,7 @@ answer_models:
 
 judges:
   # J1 judges everything except Anthropic answers, which go to J2 (FR-12).
-  j1: {id: anthropic/claude-sonnet-5.5, family: anthropic}
+  # J1 switched from Sonnet to Haiku on 2026-11-19 after the pilot: 89% same score, weighted kappa
+  # 0.85, 14x cheaper (results/haiku_judge_test.md).
+  j1: {id: anthropic/claude-haiku-5.5,  family: anthropic}
   j2: {id: openai/gpt-6.2-sol,          family: openai}

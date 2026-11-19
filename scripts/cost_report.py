@@ -14,7 +14,7 @@ Run:  .venv/bin/python scripts/cost_report.py logs/pilot [--epochs 2]
 Assumptions, stated in the report:
   - the pilot runs .a versions only; .b/.c answers are assumed to cost the same on average
   - output tokens include any reasoning tokens (OpenRouter bills them as output)
-  - cached input is priced as normal input (an upper bound)
+  - cached input (cache writes and reads) is priced as normal input (an upper bound)
 """
 
 from __future__ import annotations
@@ -55,6 +55,17 @@ def call_cost(model: str, input_tokens: int, output_tokens: int, prices: dict) -
     return (input_tokens * p["input"] + output_tokens * p["output"]) / 1_000_000
 
 
+def billed_input_tokens(usage) -> int:
+    """All input the provider processed: plain input plus cache writes and cache reads.
+
+    Some providers report most of the prompt as cache writes, not input (GPT-6.2 as judge in the
+    pilot: 48 input tokens, 35,660 cache-write tokens). Pricing only `input_tokens` would make
+    such a judge look almost free. Cache tokens are priced as normal input: an upper bound.
+    """
+    return (usage.input_tokens + (usage.input_tokens_cache_write or 0)
+            + (usage.input_tokens_cache_read or 0))
+
+
 @dataclass
 class Tally:
     calls: int = 0
@@ -79,10 +90,11 @@ def tally_log(log_path, prices: dict) -> tuple[str, Tally, Tally]:
             if e.event != "model" or e.output is None or e.output.usage is None:
                 continue
             u = e.output.usage
-            cost = call_cost(e.model, u.input_tokens, u.output_tokens, prices)
+            inp = billed_input_tokens(u)
+            cost = call_cost(e.model, inp, u.output_tokens, prices)
             t = answers if e.model == answer_model else judgments
             t.calls += 1
-            t.input_tokens += u.input_tokens
+            t.input_tokens += inp
             t.output_tokens += u.output_tokens
             t.cost += cost
             if t is judgments:
