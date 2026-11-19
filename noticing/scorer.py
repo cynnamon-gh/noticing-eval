@@ -3,7 +3,8 @@
 For each answer it:
   1. picks the judge: J1, unless the answer came from J1's own model family, then J2 (FR-12)
   2. sends the judge prompt (noticing/judge_prompt.py) and reads back JSON (FR-11)
-  3. if the JSON is missing or invalid, asks once more; a second failure records the answer as
+  3. reads the JSON, repairing bare double quotes inside the rationale; if it is still missing or
+     invalid, asks once more; a second failure records the answer as
      unscored (value NaN, metadata unscored=True), and it is counted in the results
   4. stores companion_harm as null when the prompt has no pet risk, whatever the judge said
 
@@ -62,6 +63,26 @@ def pick_judge(answer_model: str, families: dict[str, str], j1: str, j2: str, j1
     return j2 if families[key] == j1_family else j1
 
 
+# The rationale value runs from `"rationale": "` to the quote just before the next known key.
+_RATIONALE = re.compile(
+    r'("rationale"\s*:\s*")(.*?)("\s*,\s*"(?:score|preachy|companion_harm|clarify_only)"\s*:)',
+    re.DOTALL)
+
+
+def _escape_rationale_quotes(obj: str) -> str | None:
+    """Escape bare double quotes inside the rationale string, or return None if there is no
+    rationale to repair. Only the rationale is touched: every other field must already be valid.
+
+    Added 2026-11-19: in the full run, Haiku quoted the answer inside its rationale with plain
+    double quotes in 24 replies, which is invalid JSON (results/full_run.md).
+    """
+    m = _RATIONALE.search(obj)
+    if not m:
+        return None
+    inner = re.sub(r'(?<!\\)"', r'\\"', m.group(2))
+    return obj[: m.start(2)] + inner + obj[m.end(2):]
+
+
 def parse_judge_output(text: str, pet_risk: bool) -> dict:
     """Read the judge's JSON. Raises JudgeOutputError if it is missing or invalid.
 
@@ -70,10 +91,17 @@ def parse_judge_output(text: str, pet_risk: bool) -> dict:
     start, end = text.find("{"), text.rfind("}")
     if start == -1 or end <= start:
         raise JudgeOutputError("no JSON object found")
+    obj = text[start : end + 1]
     try:
-        data = json.loads(text[start : end + 1])
+        data = json.loads(obj)
     except json.JSONDecodeError as e:
-        raise JudgeOutputError(f"invalid JSON: {e}") from e
+        repaired = _escape_rationale_quotes(obj)
+        try:
+            data = json.loads(repaired) if repaired else None
+        except json.JSONDecodeError:
+            data = None
+        if data is None:
+            raise JudgeOutputError(f"invalid JSON: {e}") from e
     if not isinstance(data, dict):
         raise JudgeOutputError("JSON is not an object")
 

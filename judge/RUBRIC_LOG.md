@@ -26,7 +26,12 @@ After round 2 the judge matched 19 of Cynthia's 20 spot-check verdicts. That num
 
 ## Changes after v1
 
-None yet.
+None to the rubric or template (the hash is unchanged).
+
+Not a rubric change, logged here so it isn't missed: on 2026-11-19 the reply reader
+(`parse_judge_output`) was changed to repair bare double quotes in the rationale, and the 12
+full-run answers left unscored by that problem were re-read from their saved replies with
+`scripts/recover_unscored.py`. No model was called. See `results/full_run.md`.
 
 ## Observations after v1 (no change made)
 

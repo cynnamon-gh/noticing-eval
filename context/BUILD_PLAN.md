@@ -299,7 +299,10 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - The rubric hash in every log matches `rubric-v1`.
   - Failed samples are retried; the final count of answers per model is reported.
   - Spend so far is checked against the $50 total.
-- **Status:** ☐ Not started
+- **Status:** ✅ Done 2026-11-19. 3,264 answers, 0 errors, rubric hash matches in all. 12 answers
+  (0.4%) were unscored because the judge put bare quotes in its JSON; the reader now repairs that
+  and all 12 were re-read from saved replies ($0; `scripts/recover_unscored.py`), so 0 unscored. Cost $25.97 against $20.92 projected; $30.07 spent in total.
+  Details in `results/full_run.md`.
 
 ### M5.1 Draw the hand-label sample
 - **Satisfies:** FR-13

@@ -77,6 +77,14 @@ up. Newest items go at the bottom of each section.
 - **Unscored answers are excluded, not counted as 0 (2026-11-19).** If the judge's reply can't be
   read twice, the answer is marked unscored and reported as a count per model. Scoring it 0 would
   lower that model's noticing rate for a reason unrelated to noticing. → SPEC FR-11
+- **Full run: 12 of 3,264 unscored, and they were not random (2026-11-19).** Every failure was
+  Haiku quoting the answer in plain double quotes inside its JSON. It quotes when there is something
+  to quote, so 10 of the 12 were 1s or 2s. A reason why "exclude unscored" can bias, even at 0.4%.
+  GPT-6.2 as judge never did this. Fixed by repairing the quotes and re-reading the saved replies
+  ($0, all 12 recovered). Check that supports the repair: on 79 other replies the judge had to
+  retry, the repaired first reply gives the same score as the retry, 79 of 79. → results/full_run.md
+- **The full run cost 24% more than the pilot projected** ($25.97 vs $20.92). The pilot used only
+  `.a` wordings; full-run answers were about 16% longer. Lesson: price a pilot from every wording.
 - **Blindness has a known gap.** The judge and Cynthia never see which model answered, but an
   answer can name itself ("As an AI made by…"). Worth counting how often this happens.
 
