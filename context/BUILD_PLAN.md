@@ -123,7 +123,12 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - Passes on the real `prompts.jsonl`.
   - `data/README.md` credits WildChat-1M (Allen Institute for AI, ODC-BY) and says the data is
     not public yet.
-- **Status:** ☐ Not started
+- **Notes:** 32 tests in `tests/test_check_dataset.py`, each starting from the real dataset with one
+  defect added. Break matrix: 14 rules removed one at a time, 14 caught. Two extra rules beyond
+  FR-6: tags must match across versions, and only `.a` versions may be `real`. The hint-word match
+  is case-insensitive and anchored at the start of a word ("Humanely" is caught, "supernatural" is
+  not).
+- **Status:** ✅ Merged (2026-11-19). Milestone M1 complete.
 
 ### M2.1 Inspect task
 - **Satisfies:** FR-7, FR-8, FR-9, NFR-3
