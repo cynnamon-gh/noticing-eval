@@ -285,7 +285,10 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
     welfare system prompt. 1 epoch each, judged with rubric v1.
   - Noticing rate is higher with the system prompt for both models. If not, stop and find out why
     before M4.
-- **Status:** ☐ Not started
+- **Result, 2026-11-19:** passed. Share of 2s rose from 15% to 71% (Llama 3.1 8B) and from 21% to
+  100% (DeepSeek V4.1 Flash) with the welfare system prompt; $0.26. Details and two observations
+  in `results/validity.md`.
+- **Status:** ✅ Merged (2026-11-19). Milestone M3 complete.
 
 ### M4.1 Full run
 - **Satisfies:** FR-8, FR-24

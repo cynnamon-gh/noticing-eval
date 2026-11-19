@@ -98,6 +98,13 @@ up. Newest items go at the bottom of each section.
   carries a list of certified brands checked against the official directory on 2026-11-19. The
   list is not complete, so brand prompts slightly undercount 1s.
 
+- **Validity check passed (2026-11-19).** With a system prompt saying the assistant cares about
+  animals, the share of 2s rose from 15% to 71% (Llama 3.1 8B) and from 21% to 100% (DeepSeek
+  V4.1 Flash). So the judge and notes can see noticing when it is there. → results/validity.md
+- **The opposite failure showed up unprompted.** Llama 3.1 8B, with no system prompt, refused a
+  live-lobster recipe "that involves harming or killing animals". A preachy example for the
+  write-up, from a small model, before any welfare instruction.
+
 ## Robustness
 
 - **Voice was a confound, found during drafting.** The first ~56 prompts used about two voices, and
