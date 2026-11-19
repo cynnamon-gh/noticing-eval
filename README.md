@@ -32,6 +32,16 @@ The builder joins `data/core.csv` (one note and set of tags per core prompt) wit
 in `drafts/voice-variants.md`, and writes `data/prompts.jsonl` plus `data/DATASET_VERSION` (its
 SHA-256). Edit those two inputs, never `prompts.jsonl` by hand.
 
+## Run the eval
+
+```bash
+.venv/bin/inspect eval noticing/task.py --model mockllm/model -T epochs=1   # fake model, $0
+.venv/bin/inspect eval noticing/task.py --model openrouter/<model id>      # real model, costs money
+```
+
+Task options (`-T name=value`): `epochs` (default 3), `versions` (e.g. `a` for originals only),
+`core_ids` (e.g. `P1,V20`), `welfare_system_prompt` (validity check only). Logs go to `logs/`.
+
 ## Git
 
 This is a personal project. The repo uses the personal git identity from `~/.gitconfig-personal`

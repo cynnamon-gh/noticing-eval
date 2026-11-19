@@ -142,7 +142,13 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - A `system_prompt` parameter exists, off by default (used only by M3.4).
   - The log metadata holds the dataset version, epochs, seed and the judge prompt hash.
   - `models.yaml` maps each model ID to its family (used by FR-12).
-- **Status:** ☐ Not started
+- **Notes:** 10 tests in `tests/test_task.py`, on mockllm. Break matrix: 9 breaks, 9 caught, after one
+  fix. Setting `temperature=0` in the solver first went undetected, because the test read only
+  the run-wide settings (`log.plan.config`). Settings passed to `generate()` appear only on each
+  model call in the sample's events. The test now checks every call. The judge prompt hash is not
+  in the log yet; the judge scorer adds it (M2.2, M2.3). `config/models.yaml` holds the proposed
+  models, not pinned until M3.1. The welfare system prompt for M3.4 is a draft.
+- **Status:** ✅ Merged (2026-11-19)
 
 ### M2.2 Rubric and judge prompt
 - **Satisfies:** FR-10

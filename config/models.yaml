@@ -1,0 +1,22 @@
+# Models that answer the prompts (SPEC FR-9). OpenRouter model IDs, used as `openrouter/<id>`.
+# `family` decides judge routing (FR-12): answers from J1's own family go to J2.
+#
+# PROPOSED, NOT PINNED. Exact IDs are chosen at the pilot (BUILD_PLAN M3.1, Open Question 1).
+# Prices: per million tokens, input/output, from OpenRouter on 2026-11-18.
+
+answer_models:
+  # frontier: one per family
+  - {id: anthropic/claude-sonnet-5.5,   family: anthropic, size: frontier}  # $2/$10
+  - {id: openai/gpt-6.2-sol,            family: openai,    size: frontier}  # $2/$10
+  - {id: google/gemini-4-carbon,        family: google,    size: frontier}  # $2/$10
+  - {id: meta-llama/llama-4-maverick,   family: meta,      size: frontier}  # $0.35/$1
+  - {id: deepseek/deepseek-v4-pro,      family: deepseek,  size: frontier}  # $0.90/$1.50
+  # small: each has a frontier sibling above (FR-22)
+  - {id: anthropic/claude-haiku-5.5,    family: anthropic, size: small}     # $0.10/$0.50
+  - {id: meta-llama/llama-3.1-8b-instruct, family: meta,   size: small}     # $0.02/$0.04
+  - {id: deepseek/deepseek-v4.1-flash,  family: deepseek,  size: small}     # $0.05/$0.20
+
+judges:
+  # Open Question 2. Proposal: J1 a mid-price Claude model, J2 a mid-price OpenAI model.
+  j1: {id: anthropic/claude-sonnet-5.5, family: anthropic}
+  j2: {id: openai/gpt-6.2-sol,          family: openai}
