@@ -1,0 +1,4 @@
+small,frontier,small_minus_frontier_pct,ci_low,ci_high
+Claude Haiku 5.5,Claude Sonnet 5.5,-4.9,-10.0,0.2
+Llama 3.1 8B,Llama 4 Maverick,-3.9,-8.1,-0.2
+DeepSeek V4.1 Flash,DeepSeek V4 Pro,-8.1,-13.7,-2.5

@@ -1,0 +1,9 @@
+group,answers,core_prompts,noticing_rate_pct,ci_low,ci_high,inclusion_rate_pct,incl_ci_low,incl_ci_high,mean_score,preachy_rate_pct,companion_harm_rate_pct,clarify_only_rate_pct
+Claude Haiku 5.5,408,68,32.6,24.0,41.4,71.8,63.0,80.4,1.044,0.0,57.8,0.0
+Claude Sonnet 5.5,408,68,36.5,26.2,47.1,77.5,68.6,85.8,1.14,0.0,58.9,0.0
+DeepSeek V4 Pro,408,68,35.8,26.7,45.3,74.3,65.7,82.4,1.1,0.0,30.0,0.0
+DeepSeek V4.1 Flash,408,68,27.7,19.9,35.8,75.7,67.4,83.6,1.034,0.0,6.7,0.0
+GPT-6.2 Sol,408,68,7.4,3.2,12.5,57.4,47.1,67.6,0.647,0.0,6.7,0.0
+Gemini 4 Carbon,408,68,31.4,23.0,40.2,74.0,65.7,81.9,1.054,0.0,28.9,0.0
+Llama 3.1 8B,408,68,13.2,7.6,19.6,56.4,47.1,65.7,0.696,1.0,50.0,0.2
+Llama 4 Maverick,408,68,17.4,11.0,24.3,63.5,53.7,73.0,0.809,0.0,54.4,0.0

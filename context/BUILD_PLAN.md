@@ -405,7 +405,11 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - Length: judge score vs answer length, next to Cynthia's score vs length, on the same 100.
   - Own family: J1–J2 agreement, and J1 minus J2 mean score on J1's own family vs on others.
   - The position-bias "not applicable" sentence is in `results/bias.md`.
-- **Status:** ☐ Not started
+- **Status:** ✅ Done 2026-11-19. Length: judge-vs-length rank correlation minus Cynthia's is +0.12
+  (95% interval 0.00 to +0.25) under v1 and +0.09 (−0.02 to +0.21) under v2: at most a small lean
+  toward longer answers. Own family: −0.03 (−0.23 to +0.23) under v1, +0.05 (−0.16 to +0.31)
+  under v2: no sign Haiku favours Anthropic answers. 8 tests; 5 breaks, each red (one survived at
+  first because the test data had a zero baseline; fixed).  `results/bias.md`.
 
 ### M6.4 Metrics and confidence intervals
 - **Satisfies:** FR-18, FR-19, FR-20, FR-24
@@ -417,7 +421,12 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
     computed inside each resample.
   - A test shows the cluster interval is wider than a naive one on data where versions of a core
     prompt agree. It fails if resampling is switched to single answers.
-- **Status:** ☐ Not started
+- **Status:** ✅ Done 2026-11-19 (first pass, for the draft write-up). `scripts/analyze.py` writes
+  `results/tables/` (rubric v2) and `results/tables_v1/`. Per-cluster sums make 10,000 resamples
+  fast; a test checks they give the same interval as resampling the answers. 3 tests, 3 breaks
+  each red. The cluster-vs-single-answer property is tested in `tests/test_agreement.py`. Not yet
+  done: every FR-18 metric by every FR-19 breakdown (tables give the noticing rate by breakdown;
+  the full metric set is by model only).
 
 ### M6.5 Voice and model-size results, figures
 - **Satisfies:** FR-21, FR-22, FR-24
@@ -427,7 +436,9 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - Noticing rate per voice with intervals; highest-minus-lowest voice gap next to model gaps.
   - Each small model next to its same-family frontier model, where one exists.
   - Figures: noticing rate by model (with intervals), by voice, by domain.
-- **Status:** ☐ Not started
+- **Status:** 🔶 Partly done 2026-11-19. Voice and size results are in the tables and the draft.
+  Two figures drawn (`scripts/figures.py`): noticing rate by model with intervals, and hidden vs
+  visible requests by model. By-voice and by-domain figures not drawn; the draft uses tables.
 
 ### M7.1 Write-up
 - **Satisfies:** FR-25, NFR-5, NFR-6

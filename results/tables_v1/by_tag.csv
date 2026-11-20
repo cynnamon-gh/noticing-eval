@@ -1,0 +1,11 @@
+tag,group,answers,core_prompts,noticing_rate_pct,ci_low,ci_high
+insect,False,2928,61,27.2,20.2,34.3
+insect,True,336,7,8.0,0.4,18.2
+conditional_note,False,3072,64,25.7,19.0,32.6
+conditional_note,True,192,4,17.2,0.0,56.2
+conservation,False,3216,67,25.2,18.6,31.9
+conservation,True,48,1,29.2,29.2,29.2
+visibility,hidden,1344,28,13.8,6.2,22.2
+visibility,visible,1920,40,33.2,24.5,42.4
+src,real,272,17,23.9,11.5,37.5
+src,synthetic,2992,68,25.4,18.7,32.2
