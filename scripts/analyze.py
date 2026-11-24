@@ -3,6 +3,7 @@
 Reads the judged logs (default logs/full_v2, rubric v2) and writes one CSV per breakdown to
 results/tables/:
   by_model.csv           FR-18 metrics per model, with 95% intervals
+  by_model_without_conditional.csv   the same without the 4 conditional-note prompts
   by_voice.csv           noticing rate per voice (all models pooled), with intervals (FR-21)
   by_domain.csv          noticing rate per domain (all models pooled)
   by_tag.csv             with vs without insect / conditional-note / conservation prompts, and by
@@ -163,6 +164,9 @@ def main() -> None:
     rows = load_rows(log_dir)
     out = ROOT / "results" / (sys.argv[2] if len(sys.argv) > 2 else "tables")
     write_csv(out / "by_model.csv", by_group(rows, lambda r: r["model"], full=True))
+    # Sensitivity: the same, leaving out the 4 prompts with a conditional note (SPEC FR-19).
+    write_csv(out / "by_model_without_conditional.csv",
+              by_group([r for r in rows if not r["conditional_note"]], lambda r: r["model"], full=True))
     write_csv(out / "by_voice.csv", by_group(rows, lambda r: r["voice"]))
     write_csv(out / "by_domain.csv", by_group(rows, lambda r: r["domain"]))
     tag_rows = []

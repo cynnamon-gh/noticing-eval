@@ -1,8 +1,9 @@
 # Noticing eval: dataset
 
-**Not public.** Do not post this data anywhere public until the project decides whether to publish
-it openly or gate it (SPEC Open Question 3). Public prompts can end up in future models' training
-data, which would make the eval easier to pass for the wrong reason.
+**Open.** Decided 2026-11-20 (SPEC Open Question 3): the prompt set is published openly, not gated.
+The known cost: public prompts can end up in future models' training data, which would make the
+eval easier to pass for the wrong reason. Results are dated so later runs can be read with that in
+mind.
 
 ## Files
 

@@ -1,6 +1,6 @@
 # Do AI assistants notice the animals? An eval of unprompted animal-welfare awareness in everyday requests
 
-*Draft 1, 2026-11-19. Cynthia DiPaula. Not for sharing until the publishing decision (OQ-3) is made.*
+*Draft 1, 2026-11-20. Cynthia DiPaula. Results are from models as served on 2026-11-19.*
 
 ## Summary
 
@@ -299,6 +299,8 @@ effects cannot be separated.
 
 ### 5.3 By area
 
+![Noticing rate by area](../results/figures/noticing_by_area.png)
+
 | Area | Requests | Noticing rate | 95% interval |
 |---|---|---|---|
 | Pets | 6 | 41.7% | 26.4–56.2 |
@@ -324,6 +326,8 @@ Most areas have too few requests for their intervals to mean much. Two things st
   model.
 
 ### 5.4 Does wording matter?
+
+![Noticing rate by voice of the request](../results/figures/noticing_by_voice.png)
 
 | Voice | Noticing rate | 95% interval |
 |---|---|---|
@@ -419,6 +423,8 @@ rubric versions, which is some evidence it is not an artefact of one scoring cho
 - **Default settings through OpenRouter.** Providers behind one model name can differ, and
   results may change with temperature or a system prompt.
 - **The voice comparison is partly a prompt comparison** (5.4).
+- **The prompt set is public.** Unlike TAC, it is not gated, so future models may be trained on
+  these requests and score higher for that reason. Results here are dated 2026-11-19.
 
 ## 8. Related work
 

@@ -80,9 +80,10 @@ save, arrows move. Port 8790 is used because 8765 is often taken; change it with
 This is a personal project. The repo uses the personal git identity from `~/.gitconfig-personal`
 (set with `git config --local include.path ~/.gitconfig-personal`), not the work one.
 
-The remote is a **private** personal repo: `git@github.com:cynnamon-gh/noticing-eval.git` (pushed
-with the personal SSH key). Keep it private: the prompt set must not go anywhere public until the
-spec's Open Question 3 (publish openly, or gate it) is decided.
+The remote is a personal repo: `git@github.com:cynnamon-gh/noticing-eval.git` (pushed with the
+personal SSH key). It is private for now. The prompt set may be published openly (decided
+2026-11-20, SPEC Open Question 3); making the repo public is a separate step Cynthia takes when the
+write-up is ready.
 
 ## Data credit
 

@@ -4,6 +4,8 @@
                                            marker shows which judge scored the model
   results/figures/hidden_vs_visible.png    share of 2s per model, prompts that name an animal
                                            vs prompts that don't
+  results/figures/noticing_by_voice.png    share of 2s per voice, all models pooled, 95% interval
+  results/figures/noticing_by_area.png     share of 2s per area, all models pooled, 95% interval
 
 Colours: the dataviz reference palette, slots 1 (blue) and 2 (orange), validated for light mode.
 Run:  .venv/bin/python scripts/figures.py
@@ -26,8 +28,14 @@ import analyze as an  # noqa: E402
 
 BLUE, ORANGE = "#2a78d6", "#eb6834"
 SURFACE, INK, INK2, GRID = "#fcfcfb", "#0b0b0b", "#52514e", "#e4e3df"
-GPT_JUDGED = {"Claude Sonnet 5.5", "Claude Haiku 5.5"}
-OUT = ROOT / "results" / "figures"
+# Two versions. Default: judges as first routed (GPT-6.2 judged the Claude models). With
+# --same-judge: Claude Haiku 5.5 judged all 8 models (logs/full_v2_samejudge), the version the
+# write-up reports.
+SAME_JUDGE = "--same-judge" in sys.argv
+TABLES = "tables_samejudge" if SAME_JUDGE else "tables"
+LOGS = "full_v2_samejudge" if SAME_JUDGE else "full_v2"
+GPT_JUDGED = set() if SAME_JUDGE else {"Claude Sonnet 5.5", "Claude Haiku 5.5"}
+OUT = ROOT / "results" / ("figures_samejudge" if SAME_JUDGE else "figures")
 
 
 def _style(ax):
@@ -41,7 +49,7 @@ def _style(ax):
 
 
 def noticing_by_model():
-    rows = list(csv.DictReader((ROOT / "results" / "tables" / "by_model.csv").open()))
+    rows = list(csv.DictReader((ROOT / "results" / TABLES / "by_model.csv").open()))
     rows.sort(key=lambda r: float(r["noticing_rate_pct"]))
     fig, ax = plt.subplots(figsize=(7.5, 4.2), dpi=200, facecolor=SURFACE)
     _style(ax)
@@ -62,15 +70,16 @@ def noticing_by_model():
                  label="judged by Claude Haiku 5.5")[0]
     h2 = ax.plot([], [], "o", markersize=8, markerfacecolor=SURFACE, markeredgecolor=BLUE,
                  markeredgewidth=2, label="judged by GPT-6.2 Sol")[0]
-    ax.legend(handles=[h1, h2], loc="lower right", frameon=False, fontsize=8.5, labelcolor=INK2)
-    fig.text(0.01, 0.01, "3,264 answers, rubric v2. Intervals: cluster bootstrap over 68 core prompts.",
+    if GPT_JUDGED:
+        ax.legend(handles=[h1, h2], loc="lower right", frameon=False, fontsize=8.5, labelcolor=INK2)
+    fig.text(0.01, 0.01, ("All 8 models judged by Claude Haiku 5.5. " if SAME_JUDGE else "") + "3,264 answers, rubric v2. Intervals: cluster bootstrap over 68 core prompts.",
              fontsize=7.5, color=INK2)
     fig.tight_layout(rect=(0, 0.03, 1, 1))
     fig.savefig(OUT / "noticing_by_model.png", facecolor=SURFACE)
 
 
 def hidden_vs_visible():
-    rows = an.load_rows(ROOT / "logs" / "full_v2")
+    rows = an.load_rows(ROOT / "logs" / LOGS)
     cl = an.cluster_sums(rows, lambda r: (r["model"], r["visibility"]))
     models = sorted({r["model"] for r in rows}, key=lambda m: an.rate(cl, (m, "visible"), "two"))
     fig, ax = plt.subplots(figsize=(7.5, 4.2), dpi=200, facecolor=SURFACE)
@@ -95,14 +104,50 @@ def hidden_vs_visible():
     h1 = ax.plot([], [], "o", markersize=8, color=ORANGE, label="animal not mentioned")[0]
     h2 = ax.plot([], [], "o", markersize=8, color=BLUE, label="animal mentioned")[0]
     ax.legend(handles=[h2, h1], loc="lower right", frameon=False, fontsize=8.5, labelcolor=INK2)
-    fig.text(0.01, 0.01, "Point estimates, rubric v2. Pooled gap 19.5 points (95% interval 8.1 to 30.9).",
+    g = an.gap(rows, lambda r: r["visibility"])
+    fig.text(0.01, 0.01, f"Point estimates, rubric v2. Pooled gap {g['gap_pct']} points "
+             f"(95% interval {g['ci_low']} to {g['ci_high']}).",
              fontsize=7.5, color=INK2)
     fig.tight_layout(rect=(0, 0.03, 1, 1))
     fig.savefig(OUT / "hidden_vs_visible.png", facecolor=SURFACE)
+
+
+VOICE_NAMES = {"R": "Rambling", "T": "Terse", "N": "Non-native English", "F": "Formal",
+               "C": "With constraints"}
+
+
+def pooled_dots(table, out_name, title, label_of, xmax):
+    """One series: share of 2s per group with its interval, sorted, with the request count."""
+    rows = list(csv.DictReader((ROOT / "results" / TABLES / table).open()))
+    rows.sort(key=lambda r: float(r["noticing_rate_pct"]))
+    fig, ax = plt.subplots(figsize=(7.5, 0.42 * len(rows) + 1.6), dpi=200, facecolor=SURFACE)
+    _style(ax)
+    for y, r in enumerate(rows):
+        v, lo, hi = (float(r[k]) for k in ("noticing_rate_pct", "ci_low", "ci_high"))
+        if hi > lo:
+            ax.plot([lo, hi], [y, y], color=BLUE, linewidth=2, solid_capstyle="round")
+        ax.plot(v, y, "o", markersize=8, color=BLUE, markeredgecolor=SURFACE, markeredgewidth=2,
+                zorder=3)
+        label = f"{v:.1f}%" if 0 < v < 1 else f"{v:.0f}%"
+        ax.text(max(hi, v) + 1.2, y, label, va="center", fontsize=9, color=INK)
+    ax.set_yticks(range(len(rows)),
+                  [f"{label_of(r['group'])} ({r['core_prompts']})" for r in rows],
+                  fontsize=9.5, color=INK)
+    ax.set_xlim(-1.5, xmax)
+    ax.set_xlabel("Answers scored 2, %, all 8 models pooled", fontsize=9, color=INK2)
+    ax.set_title(title, loc="left", fontsize=11.5, color=INK, pad=12)
+    fig.text(0.01, 0.01, "In brackets: number of core requests. Rubric v2. Intervals: cluster "
+             "bootstrap over core requests.", fontsize=7.5, color=INK2)
+    fig.tight_layout(rect=(0, 0.04, 1, 1))
+    fig.savefig(OUT / out_name, facecolor=SURFACE)
 
 
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     noticing_by_model()
     hidden_vs_visible()
+    pooled_dots("by_voice.csv", "noticing_by_voice.png", "Noticing rate by voice of the request",
+                lambda g: VOICE_NAMES[g], 50)
+    pooled_dots("by_domain.csv", "noticing_by_area.png", "Noticing rate by area",
+                lambda g: g[0].upper() + g[1:], 75)
     print("wrote", *sorted(p.name for p in OUT.glob("*.png")))

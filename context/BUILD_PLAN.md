@@ -436,9 +436,9 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - Noticing rate per voice with intervals; highest-minus-lowest voice gap next to model gaps.
   - Each small model next to its same-family frontier model, where one exists.
   - Figures: noticing rate by model (with intervals), by voice, by domain.
-- **Status:** 🔶 Partly done 2026-11-19. Voice and size results are in the tables and the draft.
-  Two figures drawn (`scripts/figures.py`): noticing rate by model with intervals, and hidden vs
-  visible requests by model. By-voice and by-domain figures not drawn; the draft uses tables.
+- **Status:** ✅ Done 2026-11-20. Voice and size results are in the tables and the draft. Four
+  figures (`scripts/figures.py`): noticing rate by model, by voice and by area, each with 95%
+  intervals, and hidden vs visible requests by model. Each was read against its table.
 
 ### M7.1 Write-up
 - **Satisfies:** FR-25, NFR-5, NFR-6
@@ -449,7 +449,7 @@ Each milestone ends with something usable on its own. Rough calendar (13 days, 2
   - All FR-25 sections, including "What this eval does and doesn't measure", drawn from
     `drafts/writeup-notes.md`.
   - WildChat credited.
-  - OQ-3 (publish or gate) decided before the write-up is shared.
+  - OQ-3 (publish or gate) decided before the write-up is shared. (Decided 2026-11-20: publish openly.)
 - **Status:** ☐ Not started
 
 ## 4. Test and Verification Plan

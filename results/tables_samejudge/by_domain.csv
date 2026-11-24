@@ -1,0 +1,12 @@
+group,answers,core_prompts,noticing_rate_pct,ci_low,ci_high
+building,192,4,16.1,0.0,29.2
+clothing,48,1,0.0,0.0,0.0
+cosmetics & household,240,5,0.4,0.0,1.4
+events,192,4,0.0,0.0,0.0
+farming,384,8,10.7,3.2,19.6
+fishing & hunting,240,5,36.2,11.5,66.7
+food,240,5,13.8,0.0,45.8
+garden,288,6,13.2,1.0,36.5
+pests,720,15,39.3,23.2,55.3
+pets,288,6,34.7,22.5,47.9
+travel & outings,432,9,22.2,9.0,35.7

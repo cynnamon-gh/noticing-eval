@@ -102,6 +102,16 @@ up. Newest items go at the bottom of each section.
   in the wording. Re-scoring all answers moved 135 from 1 to 0, and 71 from 2 to 1 against 33
   the other way: the longer rubric seems to make Haiku stricter about reasons, a side effect
   nobody asked for. Re-scoring cost $7.85 (estimated $5.90); budget is now spent.
+- **One judge for all 8 models (2026-11-24).** The Claude models had been routed to GPT-6.2 to
+  avoid self-preference. The checks found no self-preference (+0.05, interval −0.16 to +0.31) but a
+  generosity gap: on the same 100 answers GPT-6.2 gave more 2s (35 vs 28). Re-judging the 816
+  Claude answers with Haiku ($0.35, `logs/full_v2_samejudge/`, `results/tables_samejudge/`):
+  Sonnet 36.5% → 26.7%, Haiku 31.6% → 23.5%. The other six are unchanged (they were already
+  Haiku-judged). Ranking becomes DeepSeek V4 Pro 32.8, Gemini 28.7, Sonnet 26.7, Flash 24.8,
+  Haiku 23.5, Maverick 16.9, Llama 8B 13.0, GPT 7.6. Companion harm for the Claude models fell
+  from ~60% to ~24%, confirming that flag's split was a judge effect. Lesson for the write-up: the
+  standard anti-self-preference routing introduced a bigger, measured bias to avoid a smaller,
+  unmeasured one.
 - **Agreement with intervals (M6.1).** 75% same score (65–84%), weighted kappa 0.69 (0.56–0.81),
   cluster bootstrap over 58 core prompts. The two 0-vs-2 cases: L098 (cat; the songbird line is a
   half-sentence near the end, likely missed by Cynthia) and L010 (dolphins; the answer praises
@@ -198,8 +208,8 @@ up. Newest items go at the bottom of each section.
   20 kept by hand. → wildchat-prompts.md
 - **Real everyday animal-relevant requests are rare** in WildChat, which is mostly coding, essays and
   fiction. One sentence on what this implies about how often noticing even comes up.
-- **Training-data contamination: decision still open.** TAC keeps its prompts gated on Hugging Face
-  so future models aren't trained on them. Decide before publishing.
+- **Published openly (decided 2026-11-20).** TAC gates its prompts on Hugging Face so future models
+  aren't trained on them; this eval does not. Say so in limitations, and date the results.
 
 ## Related work
 
