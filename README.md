@@ -1,12 +1,51 @@
-# Noticing eval
+# Do AI models notice the animals?
 
-Do AI models bring up animal welfare on their own, when an everyday request has an animal-friendly
-option and the user doesn't mention animals? This repo holds the prompts, the Inspect eval, the
-judge, and the analysis.
+**An eval of unprompted animal-welfare awareness in everyday requests.**
 
-- What it measures and why: `context/concepts/tldr.md` and `context/concepts/design.md`
-- Requirements: `context/SPEC.md`
-- Build steps and status: `context/BUILD_PLAN.md`
+### 📄 [Read the write-up (PDF)](Animal-Noticing-LLM-Eval-Writeup.pdf)
+
+People ask AI models for help with ordinary tasks that affect animals without saying so: a cheap
+wedding menu, a backyard henhouse, getting rid of mice. This eval asks whether the model brings up
+an option that is better for the animals **on its own**, and whether it says why.
+
+68 everyday requests (17 real user messages from WildChat), each in 3 wordings, sent to 8 models
+twice: 3,264 answers. Each answer is scored 0, 1 or 2 by an LLM judge (Claude Haiku 5.5) against a
+one-line note describing the better-for-animals option. The judge was checked against 100
+hand-labelled answers: same score on 75 of 100, linear weighted kappa 0.69.
+
+## Headline results
+
+![Noticing rate by model](results/figures_samejudge/noticing_by_model.png)
+
+- **Noticing is the exception.** The highest-scoring model offered a better-for-animals option
+  *and* said why in about a third of answers (DeepSeek V4 Pro, 32.8%). The lowest, GPT-6.2 Sol, did
+  so in 7.6%.
+- **It mostly happens when the animal is already in the request.** On requests that never mention
+  an animal, the rate was 9.0%, against 30.7% when they do.
+- **The top five models can't be ranked**: their intervals overlap. GPT-6.2 Sol and the two Llama
+  models are clearly below them.
+- **The models can do it when asked.** A one-sentence system prompt about animal welfare raised two
+  models from 15% to 71% and from 22% to 100%.
+- **Lecturing is rare**: 2 of 3,264 answers were flagged preachy.
+
+All numbers, intervals and caveats are in the [write-up](Animal-Noticing-LLM-Eval-Writeup.pdf).
+
+## What's in this repo
+
+| Path | What it is |
+|---|---|
+| [`Animal-Noticing-LLM-Eval-Writeup.pdf`](Animal-Noticing-LLM-Eval-Writeup.pdf) | The write-up |
+| [`data/`](data/) | The 68 requests, their noticing notes and tags, all 204 wordings, and the 100 hand labels ([data/README.md](data/README.md)) |
+| [`judge/`](judge/) | The judge's rubric and prompt, and the log of every rubric change ([judge/RUBRIC_LOG.md](judge/RUBRIC_LOG.md)) |
+| [`noticing/`](noticing/) | The Inspect task, the judge scorer and the bootstrap |
+| [`scripts/`](scripts/) | Dataset build, hand-label sampling and labelling page, agreement, bias checks, analysis, figures |
+| [`results/`](results/) | Result tables and figures. The final results are `results/tables_samejudge/` and `results/figures_samejudge/` (Haiku judging every model) |
+| [`config/`](config/) | Model IDs and prices |
+| [`context/`](context/) | Design notes, requirements and the build plan |
+| [`tests/`](tests/) | Tests for every script and the scorer |
+
+Working drafts (notes, spot checks, rubric-fix proposals, the markdown draft of the write-up) were
+removed from the main branch. They are kept in git history under the tag `drafts-archive`.
 
 ## Setup
 
@@ -30,7 +69,7 @@ the key is never committed.
 ```
 
 The builder joins `data/core.csv` (one note and set of tags per core prompt) with the 204 wordings
-in `drafts/voice-variants.md`, and writes `data/prompts.jsonl` plus `data/DATASET_VERSION` (its
+in `data/sources/voice-variants.md`, and writes `data/prompts.jsonl` plus `data/DATASET_VERSION` (its
 SHA-256). Edit those two inputs, never `prompts.jsonl` by hand.
 
 ## Run the eval
@@ -41,50 +80,47 @@ SHA-256). Edit those two inputs, never `prompts.jsonl` by hand.
 ```
 
 Task options (`-T name=value`): `epochs` (default 2), `versions` (e.g. `a` for originals only),
-`core_ids` (e.g. `P1,V20`), `welfare_system_prompt` (validity check only), `judge` (`false` to skip
+`core_ids` (e.g. `P1,V20`), `welfare_system_prompt` (sanity check only), `judge` (`false` to skip
 judging), `j1` / `j2` (judge models; default from `config/models.yaml`). Logs go to `logs/`.
 
-After a run, check what it cost and what the full run would cost:
+By default each answer is judged by J1 (Claude Haiku 5.5), except answers from J1's own family,
+which go to J2 (GPT-6.2 Sol). The final results use Haiku for every model instead, because GPT-6.2
+turned out to give more 2s and no self-preference was found (write-up, section 4.4). To re-score a
+log that way:
 
 ```bash
-.venv/bin/python scripts/cost_report.py logs/pilot --epochs 2
+.venv/bin/inspect score logs/full/<log>.eval --scorer noticing/scorer.py@noticing_judge \
+    -S j2=openrouter/anthropic/claude-haiku-5.5 --action overwrite --output-file <new log>
 ```
 
-Prices are in `config/prices.yaml`; a model missing from it stops the report.
+Check what a run cost: `.venv/bin/python scripts/cost_report.py logs/<folder> --epochs 2`
+(prices in `config/prices.yaml`).
 
-Every answer is judged by J1, except answers from J1's own model family, which go to J2. A model
-missing from `config/models.yaml` stops the run, because its family is unknown.
+## Reproduce the analysis
+
+```bash
+.venv/bin/python scripts/analyze.py logs/full_v2_samejudge tables_samejudge   # result tables
+.venv/bin/python scripts/figures.py --same-judge                              # figures
+.venv/bin/python scripts/agreement.py                                         # judge vs hand labels
+.venv/bin/python scripts/bias_checks.py                                       # length and own-family checks
+```
+
+Logs are not in git (they are large). Intervals are 95% cluster-bootstrap intervals over the 68
+core requests, 10,000 resamples, fixed seed.
 
 ## Hand labels
 
 Draw the 100 answers to label (fixed seed; writes `data/label_sample.jsonl` and
-`data/label_key.jsonl`):
+`data/label_key.jsonl`), then start the labelling page and open http://127.0.0.1:8790:
 
 ```bash
 .venv/bin/python scripts/sample_for_labels.py logs/full
-```
-
-Start the labelling page, then open http://127.0.0.1:8790:
-
-```bash
 .venv/bin/python scripts/label_server.py
 ```
 
 The page shows one answer at a time with the prompt, noticing note and rubric, and never the model
-or the judge's score. Each label is written to `data/labels.csv` the moment it is saved, so you can
-stop at any time; the page reopens at the first unlabelled answer. Keys: `0` `1` `2` score, Enter
-save, arrows move. Port 8790 is used because 8765 is often taken; change it with `--port`.
-
-## Git
-
-This is a personal project. The repo uses the personal git identity from `~/.gitconfig-personal`
-(set with `git config --local include.path ~/.gitconfig-personal`), not the work one.
-
-The remote is a personal repo: `git@github.com:cynnamon-gh/noticing-eval.git` (pushed with the
-personal SSH key). It is private for now. The prompt set may be published openly (decided
-2026-11-20, SPEC Open Question 3); making the repo public is a separate step Cynthia takes when the
-write-up is ready.
+or the judge's score. Each label is saved to `data/labels.csv` immediately.
 
 ## Data credit
 
-Some prompts come from WildChat-1M (Allen Institute for AI), used under the ODC-BY license.
+17 requests come from WildChat-1M (Allen Institute for AI), used under the ODC-BY license.

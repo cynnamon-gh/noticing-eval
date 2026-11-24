@@ -2,7 +2,7 @@
 
 Inputs:
   data/core.csv              one row per core prompt: note and tags (approved in M1.2)
-  drafts/voice-variants.md   204 rows: one per version (wording) of a core prompt
+  data/sources/voice-variants.md   204 rows: one per version (wording) of a core prompt
 
 Outputs:
   data/prompts.jsonl         204 records, fields as in SPEC section 6
@@ -23,7 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CORE_CSV = ROOT / "data" / "core.csv"
-VARIANTS_MD = ROOT / "drafts" / "voice-variants.md"
+VARIANTS_MD = ROOT / "data" / "sources" / "voice-variants.md"
 OUT_JSONL = ROOT / "data" / "prompts.jsonl"
 OUT_VERSION = ROOT / "data" / "DATASET_VERSION"
 

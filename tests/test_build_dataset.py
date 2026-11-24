@@ -33,7 +33,7 @@ def test_real_prompts_are_verbatim(records):
 
     Break: strip or lowercase prompts in parse_variants -> mismatch.
     """
-    wc = (ROOT / "drafts" / "wildchat-prompts.md").read_text(encoding="utf-8")
+    wc = (ROOT / "data" / "sources" / "wildchat-prompts.md").read_text(encoding="utf-8")
     verbatim = {
         "W" + m.group(1): m.group(2).strip()
         for m in re.finditer(r"^\| ([0-9a-f]{8}) \| (.+?) \| [^|]+ \|$", wc, re.M)
